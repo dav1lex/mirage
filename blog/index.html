@@ -5,20 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Learning Blog - Tips & Resources | EnglishPro</title>
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Discover expert English learning tips, IELTS preparation strategies, and business English insights. Free resources and guides for English learners.">
-    <meta name="keywords" content="english learning blog, ielts tips, business english, english grammar, language learning">
+    <!-- Essential SEO Meta Tags -->
+    <meta name="description"
+          content="Expert English learning tips, IELTS preparation guides, and business English resources. Improve your English skills with professional insights and practical advice.">
+    <meta name="keywords"
+          content="english learning, ielts preparation, business english, english grammar, language learning tips">
+    <meta name="author" content="EnglishPro">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourdomain.com/blog">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="English Learning Blog - Tips & Resources">
-    <meta property="og:description" content="Expert English learning tips and resources for IELTS, Business English, and more.">
-    <meta property="og:image" content="/assets/images/blog-preview.jpg">
+    <meta property="og:site_name" content="EnglishPro Blog">
+    <meta property="og:title" content="English Learning Tips & Resources">
+    <meta property="og:description"
+          content="Expert English learning tips and comprehensive resources for IELTS preparation and business English.">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/blog-preview.jpg">
+    <meta property="og:url" content="https://yourdomain.com/blog">
 
-    <!-- Twitter -->
+    <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="English Learning Blog - Tips & Resources">
-    <meta name="twitter:description" content="Expert English learning tips and resources for IELTS, Business English, and more.">
+    <meta name="twitter:title" content="English Learning Tips & Resources">
+    <meta name="twitter:description"
+          content="Expert English learning tips and resources for IELTS, Business English, and more.">
+    <meta name="twitter:image" content="https://yourdomain.com/assets/images/blog-preview.jpg">
+
+    <!-- Styling -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Add Tiptap rich text editor -->
+    <script src="https://unpkg.com/@tiptap/core@2.x.x"></script>
+    <script src="https://unpkg.com/@tiptap/starter-kit@2.x.x"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
@@ -29,8 +45,9 @@
             "@context": "https://schema.org",
             "@type": "Blog",
             "name": "EnglishPro Blog",
-            "description": "Expert English learning tips and resources",
+            "description": "Expert English learning resources and tips",
             "url": "https://yourdomain.com/blog",
+            "inLanguage": "en",
             "publisher": {
                 "@type": "Organization",
                 "name": "EnglishPro",
@@ -62,8 +79,14 @@
 </main>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        query,
+        orderBy,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         // Your Firebase config

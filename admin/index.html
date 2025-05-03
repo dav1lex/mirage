@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Dashboard | EnglishPro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50">
+<div id="loginSection" class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-2xl font-bold mb-6">Admin Login</h1>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+            </div>
+            <button type="submit"
+                    class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                Login
+            </button>
+        </form>
+    </div>
+</div>
+
+<div id="adminPanel" class="hidden">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold">Blog Admin</h1>
+                </div>
+                <div class="flex items-center">
+                    <span id="userEmail" class="mr-4 text-gray-600"></span>
+                    <button id="logoutBtn" class="text-gray-600 hover:text-gray-900">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">Blog Posts</h2>
+            <button id="newPostBtn"
+                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                New Post
+            </button>
+        </div>
+
+        <div id="postsList" class="space-y-4"></div>
+    </main>
+</div>
+
+<div id="postModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold" id="modalTitle">New Post</h3>
+            <button id="closeModal" class="text-gray-600 hover:text-gray-900">&times;</button>
+        </div>
+        <form id="postForm" class="space-y-4">
+            <!-- Main Content -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Title</label>
+                <input type="text" id="postTitle" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+            </div>
+
+            <!-- SEO Section -->
+            <div class="border-t pt-4">
+                <h4 class="font-medium mb-2">SEO Settings</h4>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Meta Description</label>
+                        <textarea id="metaDescription" maxlength="160"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                                  placeholder="Enter a compelling description (max 160 characters)"></textarea>
+                        <p class="text-sm text-gray-500 mt-1">Characters: <span id="metaCount">0</span>/160</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Keywords</label>
+                        <input type="text" id="keywords"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                               placeholder="english learning, ielts tips, etc (comma separated)">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">URL Slug</label>
+                        <input type="text" id="urlSlug"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                               placeholder="your-post-url">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rich Text Editor -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Content</label>
+                <div id="editor" class="mt-1 prose max-w-full">
+                    <!-- TipTap editor will be mounted here -->
+                </div>
+            </div>
+
+            <!-- Featured Image -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Featured Image URL</label>
+                <div class="mt-1">
+                    <input type="url" id="imageUrl"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                           placeholder="https://example.com/image.jpg">
+                    <p class="mt-2 text-sm text-gray-500">
+                        Use image URLs from free services like:
+                        <a href="https://imgur.com" target="_blank" class="text-green-600 hover:underline">Imgur</a> or
+                        <a href="https://imgbb.com" target="_blank" class="text-green-600 hover:underline">ImgBB</a>
+                    </p>
+                    <p class="text-xs text-gray-500">Recommended size: 1200x630px for optimal social sharing</p>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="flex justify-end space-x-4">
+                <button type="button" id="cancelPost"
+                        class="px-4 py-2 border rounded-md hover:bg-gray-100">
+                    Cancel
+                </button>
+                <button type="submit"
+                        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                    Save Post
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDuOh75z6nLSrAlqNN3TvSbmCSnZwYvJ_Y",
+        authDomain: "mirage-515a6.firebaseapp.com",
+        projectId: "mirage-515a6",
+        storageBucket: "mirage-515a6.firebasestorage.app",
+        messagingSenderId: "247379330521",
+        appId: "1:247379330521:web:86c45775f313e20ec785c8",
+        measurementId: "G-2S83CZYW86"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // Auth state observer
+    onAuthStateChanged(auth, (user) => {
+        document.getElementById('loginSection').style.display = user ? 'none' : 'flex';
+        document.getElementById('adminPanel').style.display = user ? 'block' : 'none';
+        if (user) {
+            document.getElementById('userEmail').textContent = user.email;
+            loadPosts();
+        }
+    });
+
+    // Login form
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            alert('Login failed: ' + error.message);
+        }
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+    // Load posts
+    async function loadPosts() {
+        const postsDiv = document.getElementById('postsList');
+        postsDiv.innerHTML = '';
+
+        try {
+            const querySnapshot = await getDocs(collection(db, 'posts'));
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postEl = document.createElement('div');
+                postEl.className = 'bg-white p-4 rounded-lg shadow flex justify-between items-center';
+                postEl.innerHTML = `
+                        <div>
+                            <h3 class="font-bold">${post.title}</h3>
+                            <p class="text-sm text-gray-600">${new Date(post.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        <div class="space-x-2">
+                            <button class="edit-post text-blue-600 hover:text-blue-800" data-id="${doc.id}">Edit</button>
+                            <button class="delete-post text-red-600 hover:text-red-800" data-id="${doc.id}">Delete</button>
+                        </div>
+                    `;
+                postsDiv.appendChild(postEl);
+            });
+        } catch (error) {
+            console.error('Error loading posts:', error);
+        }
+    }
+
+    // Create/Edit post handlers
+    document.getElementById('newPostBtn').addEventListener('click', () => {
+        document.getElementById('postModal').classList.remove('hidden');
+        document.getElementById('modalTitle').textContent = 'New Post';
+        document.getElementById('postForm').reset();
+    });
+
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+        const imageFile = document.getElementById('postImage').files[0];
+
+        try {
+            let imageUrl = '';
+            if (imageFile) {
+                const storageRef = ref(storage, `blog/${Date.now()}-${imageFile.name}`);
+                const snapshot = await uploadBytes(storageRef, imageFile);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            }
+
+            await addDoc(collection(db, 'posts'), {
+                title,
+                content,
+                imageUrl,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            });
+
+            document.getElementById('postModal').classList.add('hidden');
+            loadPosts();
+        } catch (error) {
+            console.error('Error saving post:', error);
+            alert('Error saving post');
+        }
+    });
+
+    // Modal close handlers
+    ['closeModal', 'cancelPost'].forEach(id => {
+        document.getElementById(id).addEventListener('click', () => {
+            document.getElementById('postModal').classList.add('hidden');
+        });
+    });
+</script>
+</body>
+</html>

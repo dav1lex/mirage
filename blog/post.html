@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Dynamic Meta Tags (will be filled by JavaScript) -->
+    <title>Blog Post | EnglishPro</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <meta property="article:published_time" content="">
+    <meta property="article:modified_time" content="">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Add lazy loading support -->
+    <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+</head>
+<body class="bg-gray-50">
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <!-- Your navigation -->
+</nav>
+
+<main class="pt-20 pb-12">
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="mb-8">
+            <!-- Image container with aspect ratio -->
+            <div class="relative h-0 pb-[56.25%] mb-6">
+                <img class="lozad absolute inset-0 w-full h-full object-cover rounded-lg"
+                     data-src=""
+                     alt="">
+            </div>
+            <h1 class="text-4xl font-bold mb-4"></h1>
+            <div class="flex items-center text-gray-600 text-sm">
+                <time datetime=""></time>
+                <span class="mx-2">•</span>
+                <span class="reading-time"></span>
+            </div>
+        </header>
+
+        <div class="prose prose-green max-w-none">
+            <!-- Content will be inserted here -->
+        </div>
+
+        <footer class="mt-12 pt-6 border-t">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-green-600 flex items-center">
+                        <svg class="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                        </svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </article>
+</main>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDuOh75z6nLSrAlqNN3TvSbmCSnZwYvJ_Y",
+        authDomain: "mirage-515a6.firebaseapp.com",
+        projectId: "mirage-515a6",
+        storageBucket: "mirage-515a6.firebasestorage.app",
+        messagingSenderId: "247379330521",
+        appId: "1:247379330521:web:86c45775f313e20ec785c8",
+        measurementId: "G-2S83CZYW86"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Initialize lazy loading
+    const observer = lozad();
+    observer.observe();
+
+    // Get post slug from URL
+    const slug = window.location.pathname.split('/').pop();
+
+    async function loadPost() {
+        const postsRef = collection(db, 'posts');
+        const q = query(postsRef, where('slug', '==', slug));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const post = querySnapshot.docs[0].data();
+
+            // Update meta tags
+            document.title = `${post.title} | EnglishPro Blog`;
+            document.querySelector('meta[name="description"]').content = post.metaDescription;
+            document.querySelector('meta[name="keywords"]').content = post.keywords;
+
+            // Update Open Graph tags
+            document.querySelector('meta[property="og:title"]').content = post.title;
+            document.querySelector('meta[property="og:description"]').content = post.metaDescription;
+            document.querySelector('meta[property="og:image"]').content = post.imageUrl;
+            document.querySelector('meta[property="og:url"]').content = window.location.href;
+            document.querySelector('meta[property="article:published_time"]').content = post.createdAt.toISOString();
+
+            // Update content
+            document.querySelector('h1').textContent = post.title;
+            document.querySelector('time').textContent = new Date(post.createdAt).toLocaleDateString();
+            document.querySelector('time').setAttribute('datetime', post.createdAt.toISOString());
+            document.querySelector('.reading-time').textContent = `${Math.ceil(post.content.split(' ').length / 200)} min read`;
+
+            // Update image
+            const featuredImage = document.querySelector('.lozad');
+            featuredImage.dataset.src = post.imageUrl;
+            featuredImage.alt = post.title;
+
+            // Update content
+            document.querySelector('.prose').innerHTML = post.content;
+
+            // Refresh lazy loading
+            observer.observe();
+
+            // Add structured data
+            const articleSchema = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": post.title,
+                "description": post.metaDescription,
+                "image": post.imageUrl,
+                "datePublished": post.createdAt.toISOString(),
+                "dateModified": post.updatedAt.toISOString(),
+                "author": {
+                    "@type": "Organization",
+                    "name": "EnglishPro"
+                }
+            };
+
+            const script = document.createElement('script');
+            script.type = "application/ld+json";
+            script.text = JSON.stringify(articleSchema);
+            document.head.appendChild(script);
+        }
+    }
+
+    loadPost();
+</script>
+</body>
+</html>
