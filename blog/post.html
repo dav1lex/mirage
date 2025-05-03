@@ -9,6 +9,10 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+
     <!-- Open Graph Tags -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="">
@@ -66,9 +70,6 @@
 </main>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
     const firebaseConfig = {
         apiKey: "AIzaSyDuOh75z6nLSrAlqNN3TvSbmCSnZwYvJ_Y",
         authDomain: "mirage-515a6.firebaseapp.com",
@@ -79,8 +80,8 @@
         measurementId: "G-2S83CZYW86"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
     // Initialize lazy loading
     const observer = lozad();
@@ -90,11 +91,17 @@
     const slug = window.location.pathname.split('/').pop();
 
     async function loadPost() {
-        const postsRef = collection(db, 'posts');
-        const q = query(postsRef, where('slug', '==', slug));
-        const querySnapshot = await getDocs(q);
+        try {
+            const slug = window.location.pathname.split('/').pop();
+            const querySnapshot = await db.collection('posts')
+                .where('slug', '==', slug)
+                .get();
 
-        if (!querySnapshot.empty) {
+            if (querySnapshot.empty) {
+                // Handle 404
+                return;
+            }
+
             const post = querySnapshot.docs[0].data();
 
             // Update meta tags
@@ -145,6 +152,8 @@
             script.type = "application/ld+json";
             script.text = JSON.stringify(articleSchema);
             document.head.appendChild(script);
+        }catch (error){
+            console.log('error')
         }
     }
 
