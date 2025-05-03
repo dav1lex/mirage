@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Blog - Tips & Resources | EnglishPro</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover expert English learning tips, IELTS preparation strategies, and business English insights. Free resources and guides for English learners.">
+    <meta name="keywords" content="english learning blog, ielts tips, business english, english grammar, language learning">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="English Learning Blog - Tips & Resources">
+    <meta property="og:description" content="Expert English learning tips and resources for IELTS, Business English, and more.">
+    <meta property="og:image" content="/assets/images/blog-preview.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="English Learning Blog - Tips & Resources">
+    <meta name="twitter:description" content="Expert English learning tips and resources for IELTS, Business English, and more.">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Structured Data for Blog -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "EnglishPro Blog",
+            "description": "Expert English learning tips and resources",
+            "url": "https://yourdomain.com/blog",
+            "publisher": {
+                "@type": "Organization",
+                "name": "EnglishPro",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://yourdomain.com/assets/images/logo.png"
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+<!-- Navigation (same as main site) -->
+<nav class="bg-white shadow-lg fixed w-full z-50">
+    <!-- ... your existing nav ... -->
+</nav>
+
+<main class="pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">English Learning Blog</h1>
+            <p class="text-xl text-gray-600">Expert tips, resources, and guides for English learners</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogPosts">
+            <!-- Posts will be dynamically inserted here -->
+        </div>
+    </div>
+</main>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        // Your Firebase config
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadBlogPosts() {
+        try {
+            const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(postsQuery);
+            const blogPosts = document.getElementById("blogPosts");
+
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postElement = createPostElement(post);
+                blogPosts.appendChild(postElement);
+            });
+        } catch (error) {
+            console.error("Error loading posts:", error);
+        }
+    }
+
+    function createPostElement(post) {
+        const article = document.createElement("article");
+        article.className = "bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300";
+
+        article.innerHTML = `
+                <img src="${post.imageUrl || '/assets/images/default-blog.jpg'}"
+                     alt="${post.title}"
+                     class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-xl font-bold mb-2">
+                        <a href="/blog/${post.slug}" class="hover:text-green-600 transition-colors">
+                            ${post.title}
+                        </a>
+                    </h2>
+                    <p class="text-gray-600 mb-4">${post.excerpt || post.content.substring(0, 150)}...</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <time datetime="${post.createdAt}">${new Date(post.createdAt).toLocaleDateString()}</time>
+                        <span class="mx-2">•</span>
+                        <span>${post.readingTime || '5 min read'}</span>
+                    </div>
+                </div>
+            `;
+
+        return article;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadBlogPosts);
+</script>
+</body>
+</html>
