@@ -32,9 +32,9 @@
 
     <!-- Styling -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Add Tiptap rich text editor -->
-    <script src="https://unpkg.com/@tiptap/core@2.x.x"></script>
-    <script src="https://unpkg.com/@tiptap/starter-kit@2.x.x"></script>
+<!--    &lt;!&ndash; Add Tiptap rich text editor &ndash;&gt;-->
+<!--    <script src="https://unpkg.com/@tiptap/core@2.x.x"></script>-->
+<!--    <script src="https://unpkg.com/@tiptap/starter-kit@2.x.x"></script>-->
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
@@ -95,12 +95,36 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    function showLoading() {
+        const blogPosts = document.getElementById('blogPosts');
+        blogPosts.innerHTML = `
+        <div class="animate-pulse">
+            ${Array(6).fill().map(() => `
+                <div class="bg-gray-200 h-64 rounded-lg mb-4"></div>
+            `).join('')}
+        </div>
+    `;
+    }
+
+    // Update loadBlogPosts function
     async function loadBlogPosts() {
+        showLoading();
         try {
             const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(postsQuery);
             const blogPosts = document.getElementById("blogPosts");
 
+            if (querySnapshot.empty) {
+                blogPosts.innerHTML = `
+                <div class="text-center text-gray-600 py-12">
+                    <p class="text-xl">No posts yet.</p>
+                    <p class="mt-2">Check back soon for new content!</p>
+                </div>
+            `;
+                return;
+            }
+
+            blogPosts.innerHTML = '';
             querySnapshot.forEach((doc) => {
                 const post = doc.data();
                 const postElement = createPostElement(post);
@@ -108,6 +132,12 @@
             });
         } catch (error) {
             console.error("Error loading posts:", error);
+            document.getElementById("blogPosts").innerHTML = `
+            <div class="text-center text-red-600 py-12">
+                <p class="text-xl">Error loading posts</p>
+                <p class="mt-2">Please try again later</p>
+            </div>
+        `;
         }
     }
 

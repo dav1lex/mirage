@@ -6,6 +6,8 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Admin Dashboard | EnglishPro</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@7.8.0/tinymce.min.js"></script>
+
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="bg-gray-50">
@@ -102,8 +104,8 @@
             <!-- Rich Text Editor -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Content</label>
-                <div id="editor" class="mt-1 prose max-w-full">
-                    <!-- TipTap editor will be mounted here -->
+                <div id="editor" class="mt-1 prose max-w-full min-h-[400px] border rounded-md">
+                    <!-- TinyMCE will be initialized here -->
                 </div>
             </div>
 
@@ -219,29 +221,78 @@
         document.getElementById('postForm').reset();
     });
 
+    // Update the postForm event listener
     document.getElementById('postForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const title = document.getElementById('postTitle').value;
-        const content = document.getElementById('postContent').value;
-        const imageUrl = document.getElementById('imageUrl').value;
-        const metaDescription = document.getElementById('metaDescription').value;
-        const keywords = document.getElementById('keywords').value;
-        const slug = document.getElementById('urlSlug').value || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+        // Get all form values with null checks
+        const title = document.getElementById('postTitle')?.value || '';
+        const content = document.getElementById('editor')?.innerHTML || ''; // Changed from postContent to editor
+        const imageUrl = document.getElementById('imageUrl')?.value || '';
+        const metaDescription = document.getElementById('metaDescription')?.value || '';
+        const keywords = document.getElementById('keywords')?.value || '';
+        let slug = document.getElementById('urlSlug')?.value || '';
+
+        // Generate SEO-friendly slug if empty
+        if (!slug) {
+            slug = title.toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
+        }
+
+        // Validate required fields
+        if (!title) {
+            alert('Title is required');
+            return;
+        }
 
         try {
+            // Create SEO-optimized blog post
             await addDoc(collection(db, 'posts'), {
                 title,
                 content,
                 imageUrl,
-                metaDescription,
-                keywords,
+                metaDescription: metaDescription || title.substring(0, 155), // Fallback meta description
+                keywords: keywords || title.toLowerCase().split(' ').join(', '), // Fallback keywords
                 slug,
                 createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp()
+                updatedAt: serverTimestamp(),
+                author: auth.currentUser.email,
+                readingTime: `${Math.ceil(content.split(' ').length / 200)} min read`,
+                excerpt: content.replace(/<[^>]*>/g, '').substring(0, 160) + '...', // Clean HTML and create excerpt
+                // Add structured data
+                structuredData: {
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "headline": title,
+                    "description": metaDescription || title,
+                    "image": imageUrl,
+                    "author": {
+                        "@type": "Person",
+                        "name": auth.currentUser.email
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "EnglishPro",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://yourdomain.com/logo.png"
+                        }
+                    },
+                    "datePublished": new Date().toISOString(),
+                    "dateModified": new Date().toISOString()
+                }
             });
 
+            // Success notification
+            alert('Post created successfully!');
+
+            // Reset form and close modal
             document.getElementById('postModal').classList.add('hidden');
             document.getElementById('postForm').reset();
+            if (editor) {
+                editor.commands.setContent('');
+            }
             loadPosts();
         } catch (error) {
             console.error('Error saving post:', error);
@@ -249,6 +300,35 @@
         }
     });
 
+    // Add TinyMCE rich text editor
+    tinymce.init({
+        selector: '#editor',
+        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+        height: 400
+    });
+
+    // Add character counter for meta description
+    document.getElementById('metaDescription')?.addEventListener('input', function(e) {
+        const count = e.target.value.length;
+        const counter = document.getElementById('metaCount');
+        if (counter) {
+            counter.textContent = count;
+            counter.className = count > 155 ? 'text-red-500' : 'text-gray-500';
+        }
+    });
+
+    // Auto-generate slug from title
+    document.getElementById('postTitle')?.addEventListener('input', function(e) {
+        const slug = e.target.value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+        const slugInput = document.getElementById('urlSlug');
+        if (slugInput) {
+            slugInput.value = slug;
+        }
+    });
     // Modal close handlers
     ['closeModal', 'cancelPost'].forEach(id => {
         document.getElementById(id).addEventListener('click', () => {
