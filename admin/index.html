@@ -223,30 +223,29 @@
         e.preventDefault();
         const title = document.getElementById('postTitle').value;
         const content = document.getElementById('postContent').value;
-        const imageFile = document.getElementById('postImage').files[0];
+        const imageUrl = document.getElementById('imageUrl').value;
+        const metaDescription = document.getElementById('metaDescription').value;
+        const keywords = document.getElementById('keywords').value;
+        const slug = document.getElementById('urlSlug').value || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
         try {
-            let imageUrl = '';
-            if (imageFile) {
-                const storageRef = ref(storage, `blog/${Date.now()}-${imageFile.name}`);
-                const snapshot = await uploadBytes(storageRef, imageFile);
-                imageUrl = await getDownloadURL(snapshot.ref);
-            }
-
             await addDoc(collection(db, 'posts'), {
                 title,
                 content,
                 imageUrl,
+                metaDescription,
+                keywords,
+                slug,
                 createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp(),
-                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+                updatedAt: serverTimestamp()
             });
 
             document.getElementById('postModal').classList.add('hidden');
+            document.getElementById('postForm').reset();
             loadPosts();
         } catch (error) {
             console.error('Error saving post:', error);
-            alert('Error saving post');
+            alert('Error saving post: ' + error.message);
         }
     });
 
