@@ -142,7 +142,6 @@
         const article = document.createElement("article");
         article.className = "bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300";
 
-        // Format date
         const postDate = post.createdAt?.toDate() || new Date();
         const formattedDate = postDate.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -150,31 +149,33 @@
             day: 'numeric'
         });
 
+        // Fix the URL path
+        const postUrl = `/mirage/blog/post.html?slug=${post.slug}`; // Updated URL structure
+
         article.innerHTML = `
-            <a href="/blog/${post.slug}" class="block">
-                <div class="relative h-48">
-                    <img src="${post.imageUrl || '/assets/images/default-blog.jpg'}"
-                         alt="${post.title}"
-                         class="absolute w-full h-full object-cover"
-                         loading="lazy">
+        <a href="${postUrl}" class="block">
+            <div class="relative h-48">
+                <img src="${post.imageUrl || '/mirage/assets/images/default-blog.jpg'}"
+                     alt="${post.title}"
+                     class="absolute w-full h-full object-cover"
+                     loading="lazy">
+            </div>
+            <div class="p-6">
+                <h2 class="text-xl font-bold mb-2 hover:text-green-600 transition-colors">
+                    ${post.title}
+                </h2>
+                <p class="text-gray-600 mb-4">${post.metaDescription || post.content.substring(0, 150)}...</p>
+                <div class="flex items-center text-sm text-gray-500">
+                    <time datetime="${postDate.toISOString()}">${formattedDate}</time>
+                    <span class="mx-2">•</span>
+                    <span>${post.readingTime || '5 min read'}</span>
                 </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-2 hover:text-green-600 transition-colors">
-                        ${post.title}
-                    </h2>
-                    <p class="text-gray-600 mb-4">${post.metaDescription || post.content.substring(0, 150)}...</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <time datetime="${postDate.toISOString()}">${formattedDate}</time>
-                        <span class="mx-2">•</span>
-                        <span>${post.readingTime || '5 min read'}</span>
-                    </div>
-                </div>
-            </a>
-        `;
+            </div>
+        </a>
+    `;
 
         return article;
     }
-
     // Load posts when DOM is ready
     document.addEventListener('DOMContentLoaded', loadBlogPosts);
 </script></body>
