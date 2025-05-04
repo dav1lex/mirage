@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin Dashboard | EnglishPro</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Admin dashboard for managing blog content">
+    <meta name="author" content="EnglishPro">
+
+    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/tinymce@7.8.0/tinymce.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Tiptap -->
+    <script src="https://unpkg.com/@tiptap/core@2.1.13"></script>
+    <script src="https://unpkg.com/@tiptap/pm@2.1.13"></script>
+    <script src="https://unpkg.com/@tiptap/starter-kit@2.1.13"></script>
+    <script src="https://unpkg.com/@tiptap/extension-image@2.1.13"></script>
+    <script src="https://unpkg.com/@tiptap/extension-link@2.1.13"></script>
+    <script src="https://unpkg.com/@tiptap/extension-placeholder@2.1.13"></script>
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
-
-    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="bg-gray-50">
+<!-- Login Section -->
 <div id="loginSection" class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h1 class="text-2xl font-bold mb-6">Admin Login</h1>
@@ -36,7 +50,9 @@
     </div>
 </div>
 
+<!-- Admin Panel -->
 <div id="adminPanel" class="hidden">
+    <!-- Navigation -->
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -53,6 +69,7 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">Blog Posts</h2>
@@ -66,18 +83,21 @@
     </main>
 </div>
 
+<!-- Post Modal -->
 <div id="postModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
     <div class="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-bold" id="modalTitle">New Post</h3>
             <button id="closeModal" class="text-gray-600 hover:text-gray-900">&times;</button>
         </div>
+
         <form id="postForm" class="space-y-4">
-            <!-- Main Content -->
+            <!-- Title -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Title</label>
                 <input type="text" id="postTitle" required
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <p class="mt-1 text-sm text-gray-500">Character count: <span id="titleCount">0</span>/60 (Optimal: 50-60)</p>
             </div>
 
             <!-- SEO Section -->
@@ -89,7 +109,7 @@
                         <textarea id="metaDescription" maxlength="160"
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
                                   placeholder="Enter a compelling description (max 160 characters)"></textarea>
-                        <p class="text-sm text-gray-500 mt-1">Characters: <span id="metaCount">0</span>/160</p>
+                        <p class="mt-1 text-sm text-gray-500">Characters: <span id="metaCount">0</span>/160 (Optimal: 150-160)</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Keywords</label>
@@ -106,13 +126,6 @@
                 </div>
             </div>
 
-            <!-- Rich Text Editor -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Content</label>
-                <div id="editor" class="mt-1 prose max-w-full min-h-[400px] border rounded-md">
-                </div>
-            </div>
-
             <!-- Featured Image -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">Featured Image URL</label>
@@ -121,11 +134,26 @@
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
                            placeholder="https://example.com/image.jpg">
                     <p class="mt-2 text-sm text-gray-500">
-                        Use image URLs from free services like:
-                        <a href="https://imgur.com" target="_blank" class="text-green-600 hover:underline">Imgur</a> or
-                        <a href="https://imgbb.com" target="_blank" class="text-green-600 hover:underline">ImgBB</a>
+                        Recommended size: 1200x630px for optimal social sharing
                     </p>
-                    <p class="text-xs text-gray-500">Recommended size: 1200x630px for optimal social sharing</p>
+                </div>
+            </div>
+
+            <!-- Rich Text Editor -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Content</label>
+                <div class="editor-container">
+                    <div class="editor-toolbar" id="editor-toolbar"></div>
+                    <div id="editor" class="prose max-w-full"></div>
+                    <div class="seo-score">
+                        <div class="flex justify-between mb-2">
+                            <span>SEO Score</span>
+                            <span id="seo-score-value">0%</span>
+                        </div>
+                        <div class="seo-score-bar">
+                            <div class="seo-score-fill" id="seo-score-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -143,8 +171,9 @@
         </form>
     </div>
 </div>
-<script type="module">
 
+<script>
+    // Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyDuOh75z6nLSrAlqNN3TvSbmCSnZwYvJ_Y",
         authDomain: "mirage-515a6.firebaseapp.com",
@@ -155,9 +184,151 @@
         measurementId: "G-2S83CZYW86"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+
+    // Initializetiptap
+    let editor;
+
+
+    function initEditor() {
+        const toolbar = document.getElementById('editor-toolbar');
+
+        editor = new Editor({
+            element: document.getElementById('editor'),
+            extensions: [
+                StarterKit,
+                Image,
+                Link,
+                Placeholder.configure({
+                    placeholder: 'Start writing your post...'
+                })
+            ],
+            content: '',
+            onUpdate: ({ editor }) => {
+                updateSEOScore();
+            }
+        });
+
+        function updateSEOScore() {
+            const title = document.getElementById('postTitle').value;
+            const content = editor.getHTML();
+            const metaDescription = document.getElementById('metaDescription').value;
+            const keywords = document.getElementById('keywords').value;
+
+            let score = 0;
+            const issues = [];
+
+            // Title analysis (20 points)
+            if (title.length >= 40 && title.length <= 60) {
+                score += 20;
+            } else {
+                issues.push(`Title length should be 40-60 characters (current: ${title.length})`);
+            }
+
+            // Meta description analysis (20 points)
+            if (metaDescription.length >= 150 && metaDescription.length <= 160) {
+                score += 20;
+            } else {
+                issues.push(`Meta description should be 150-160 characters (current: ${metaDescription.length})`);
+            }
+
+            // Content length analysis (20 points)
+            const plainText = content.replace(/<[^>]*>/g, '');
+            const wordCount = plainText.split(/\s+/).length;
+            if (wordCount >= 300) {
+                score += 20;
+            } else {
+                issues.push(`Content should be at least 300 words (current: ${wordCount})`);
+            }
+
+            // Keyword usage analysis (20 points)
+            if (keywords) {
+                const keywordList = keywords.split(',').map(k => k.trim().toLowerCase());
+                const contentLower = plainText.toLowerCase();
+
+                let keywordFound = 0;
+                keywordList.forEach(keyword => {
+                    if (contentLower.includes(keyword)) {
+                        keywordFound++;
+                    }
+                });
+
+                score += Math.min((keywordFound / keywordList.length) * 20, 20);
+            } else {
+                issues.push('No keywords specified');
+            }
+
+            // Structure analysis (20 points)
+            let structureScore = 0;
+            if (content.includes('<h1>')) structureScore += 5;
+            if (content.includes('<h2>')) structureScore += 5;
+            if (content.includes('<p>')) structureScore += 5;
+            if (content.includes('<img')) structureScore += 5;
+            score += structureScore;
+
+            // Update UI
+            const scoreElement = document.getElementById('seo-score-value');
+            const scoreFill = document.getElementById('seo-score-fill');
+
+            scoreElement.textContent = `${Math.round(score)}%`;
+            scoreFill.style.width = `${score}%`;
+            scoreFill.style.backgroundColor = score >= 80 ? '#059669' : score >= 60 ? '#FBBF24' : '#DC2626';
+
+            // Return score and issues for potential display
+            return { score, issues };
+        }
+        // Create toolbar buttons
+        const buttons = [
+            { command: 'toggleBold', icon: 'B', title: 'Bold' },
+            { command: 'toggleItalic', icon: 'I', title: 'Italic' },
+            { command: 'toggleHeading', args: { level: 1 }, icon: 'H1', title: 'Heading 1' },
+            { command: 'toggleHeading', args: { level: 2 }, icon: 'H2', title: 'Heading 2' },
+            { command: 'toggleBulletList', icon: '•', title: 'Bullet List' },
+            { command: 'toggleOrderedList', icon: '1.', title: 'Numbered List' },
+            { command: 'toggleBlockquote', icon: '"', title: 'Quote' },
+            {
+                command: 'insertImage',
+                icon: '🖼️',
+                title: 'Insert Image',
+                action: () => {
+                    const url = prompt('Enter image URL:');
+                    if (url) {
+                        editor.chain().focus().setImage({ src: url }).run();
+                    }
+                }
+            },
+            {
+                command: 'toggleLink',
+                icon: '🔗',
+                title: 'Insert Link',
+                action: () => {
+                    const url = prompt('Enter URL:');
+                    if (url) {
+                        editor.chain().focus().toggleLink({ href: url }).run();
+                    }
+                }
+            }
+        ];
+
+        buttons.forEach(({ command, icon, title, args, action }) => {
+            const button = document.createElement('button');
+            button.textContent = icon;
+            button.title = title;
+            button.onclick = () => {
+                if (action) {
+                    action();
+                } else if (args) {
+                    editor.chain().focus()[command](args).run();
+                } else {
+                    editor.chain().focus()[command]().run();
+                }
+            };
+            toolbar.appendChild(button);
+        });
+    }
 
     // Auth state observer
     auth.onAuthStateChanged((user) => {
@@ -169,7 +340,7 @@
         }
     });
 
-    // Login form
+    // Login form handler
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
@@ -182,160 +353,28 @@
         }
     });
 
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+    // Logout handler
+    document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
 
-    // Load posts
-    async function loadPosts() {
-        const postsDiv = document.getElementById('postsList');
-        postsDiv.innerHTML = '';
-
-        try {
-            const querySnapshot = await db.collection('posts')
-                .orderBy('createdAt', 'desc')
-                .get();
-
-            querySnapshot.forEach((doc) => {
-                const post = doc.data();
-                const postEl = document.createElement('div');
-                postEl.className = 'bg-white p-6 rounded-lg shadow flex justify-between items-center mb-4';
-
-                // Format date
-                const postDate = post.createdAt?.toDate() || new Date();
-                const formattedDate = postDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                postEl.innerHTML = `
-                <div class="flex-grow">
-                    <div class="flex items-center mb-2">
-                        <h3 class="font-bold text-xl">${post.title}</h3>
-                        ${post.metaDescription ?
-                    `<span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded">SEO Ready</span>`
-                    : ''}
-                    </div>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Published: ${formattedDate}</p>
-                        <p>Reading time: ${post.readingTime || '5 min read'}</p>
-                        ${post.keywords ?
-                    `<p class="text-gray-500">Keywords: ${post.keywords}</p>`
-                    : ''}
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="/mirage/blog/post.html?slug=${post.slug}"
-                       target="_blank"
-                       class="text-blue-600 hover:text-blue-800">
-                        View
-                    </a>
-                    <button onclick="editPost('${doc.id}')"
-                            class="text-green-600 hover:text-green-800">
-                        Edit
-                    </button>
-                    <button onclick="deletePost('${doc.id}')"
-                            class="text-red-600 hover:text-red-800">
-                        Delete
-                    </button>
-                </div>
-            `;
-                postsDiv.appendChild(postEl);
-            });
-
-            if (querySnapshot.empty) {
-                postsDiv.innerHTML = `
-                <div class="text-center py-8 text-gray-600">
-                    <p class="text-xl mb-2">No posts yet</p>
-                    <p>Click "New Post" to create your first blog post</p>
-                </div>
-            `;
-            }
-        } catch (error) {
-            console.error('Error loading posts:', error);
-            postsDiv.innerHTML = `
-            <div class="text-center py-8">
-                <p class="text-red-600">Error loading posts: ${error.message}</p>
-            </div>
-        `;
-        }
-    }
-
-    document.getElementById('newPostBtn').addEventListener('click', () => {
-        document.getElementById('postModal').classList.remove('hidden');
-        document.getElementById('modalTitle').textContent = 'New Post';
-        document.getElementById('postForm').reset();
+    // Character counters
+    document.getElementById('postTitle').addEventListener('input', function(e) {
+        document.getElementById('titleCount').textContent = e.target.value.length;
     });
 
-    // Update the postForm event listener
-    document.getElementById('postForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const form = e.target;
-        const isEditMode = form.dataset.mode === 'edit';
-        const postId = form.dataset.postId;
-
-        // Gather post data
-        const postData = {
-            title: document.getElementById('postTitle').value,
-            content: tinymce.get('editor').getContent(),
-            imageUrl: document.getElementById('imageUrl').value,
-            metaDescription: document.getElementById('metaDescription').value,
-            keywords: document.getElementById('keywords').value,
-            slug: document.getElementById('urlSlug').value || document.getElementById('postTitle').value
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, ''),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            lastModifiedBy: auth.currentUser.email,
-            lastModifiedDate: new Date().toISOString(),
-            // SEO enhancements
-            excerpt: tinymce.get('editor').getContent({format: 'text'}).substring(0, 160) + '...',
-            readingTime: `${Math.ceil(tinymce.get('editor').getContent({format: 'text'}).split(/\s+/).length / 200)} min read`,
-            seoScore: calculateSEOScore(postData),
-            structuredData: {
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                "headline": document.getElementById('postTitle').value,
-                "description": document.getElementById('metaDescription').value,
-                "image": document.getElementById('imageUrl').value,
-                "dateModified": new Date().toISOString(),
-                "author": {
-                    "@type": "Person",
-                    "name": auth.currentUser.email
-                }
-            }
-        };
-
-        try {
-            if (isEditMode && postId) {
-                // Update existing post
-                await db.collection('posts').doc(postId).update(postData);
-                alert('Post updated successfully!');
-            } else {
-                // Create new post
-                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                postData.author = auth.currentUser.email;
-                await db.collection('posts').add(postData);
-                alert('Post created successfully!');
-            }
-
-            // Reset form and close modal
-            form.reset();
-            form.dataset.mode = '';
-            form.dataset.postId = '';
-            tinymce.get('editor').setContent('');
-            document.getElementById('postModal').classList.add('hidden');
-
-            // Refresh posts list
-            await loadPosts();
-
-        } catch (error) {
-            console.error('Error saving post:', error);
-            alert('Error saving post: ' + error.message);
-        }
+    document.getElementById('metaDescription').addEventListener('input', function(e) {
+        document.getElementById('metaCount').textContent = e.target.value.length;
     });
-    //seo score
+
+    // Auto-generate slug from title
+    document.getElementById('postTitle').addEventListener('input', function(e) {
+        const slug = e.target.value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        document.getElementById('urlSlug').value = slug;
+    });
+
+    // SEO Score calculation
     function calculateSEOScore(postData) {
         let score = 0;
         const maxScore = 100;
@@ -354,10 +393,10 @@
         if (postData.keywords && postData.keywords.length > 0) score += 15;
 
         // Content length (at least 300 words)
-        const wordCount = postData.content.split(/\s+/).length;
+        const wordCount = postData.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
         if (wordCount >= 300) score += 15;
 
-        // Image with URL
+        // Image URL present
         if (postData.imageUrl) score += 15;
 
         // Slug optimization
@@ -365,34 +404,87 @@
 
         return Math.min(score, maxScore);
     }
-    window.deletePost = async function (postId) {
-        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
-            return;
-        }
+
+    // Load posts
+    async function loadPosts() {
+        const postsDiv = document.getElementById('postsList');
+        postsDiv.innerHTML = '';
 
         try {
-            // Delete from Firestore
-            await db.collection('posts').doc(postId).delete();
+            const querySnapshot = await db.collection('posts')
+                .orderBy('createdAt', 'desc')
+                .get();
 
-            // Show success message
-            alert('Post deleted successfully');
+            if (querySnapshot.empty) {
+                postsDiv.innerHTML = `
+                        <div class="text-center py-8">
+                            <p class="text-xl text-gray-600">No posts yet</p>
+                            <p class="mt-2 text-gray-500">Create your first post!</p>
+                        </div>
+                    `;
+                return;
+            }
 
-            // Refresh the posts list
-            await loadPosts();
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postEl = document.createElement('div');
+                postEl.className = 'bg-white p-6 rounded-lg shadow flex justify-between items-center mb-4';
 
+                const seoScore = calculateSEOScore(post);
+                const seoScoreClass = seoScore >= 80 ? 'bg-green-100 text-green-800' :
+                    seoScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800';
+
+                postEl.innerHTML = `
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-bold text-xl">${post.title}</h3>
+                                <span class="px-2 py-1 ${seoScoreClass} text-xs rounded">
+                                    SEO: ${seoScore}%
+                                </span>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <p>Published: ${post.createdAt?.toDate().toLocaleDateString()}</p>
+                                <p class="text-sm text-gray-500">${post.metaDescription || ''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <a href="/mirage/blog/post.html?slug=${post.slug}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800">
+                                View
+                            </a>
+                            <button onclick="editPost('${doc.id}')"
+                                    class="text-green-600 hover:text-green-800">
+                                Edit
+                            </button>
+                            <button onclick="deletePost('${doc.id}')"
+                                    class="text-red-600 hover:text-red-800">
+                                Delete
+                            </button>
+                        </div>
+                    `;
+
+                postsDiv.appendChild(postEl);
+            });
         } catch (error) {
-            console.error('Error deleting post:', error);
-            alert('Error deleting post: ' + error.message);
+            console.error('Error loading posts:', error);
+            postsDiv.innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-red-600">Error loading posts: ${error.message}</p>
+                    </div>
+                `;
         }
-    };    // Add edit functionality
-    window.editPost = async function (postId) {
+    }
+
+    // Edit post
+    window.editPost = async function(postId) {
         try {
             const postDoc = await db.collection('posts').doc(postId).get();
 
             if (postDoc.exists) {
                 const post = postDoc.data();
 
-                // Populate form
                 document.getElementById('postTitle').value = post.title || '';
                 tinymce.get('editor').setContent(post.content || '');
                 document.getElementById('imageUrl').value = post.imageUrl || '';
@@ -400,11 +492,9 @@
                 document.getElementById('keywords').value = post.keywords || '';
                 document.getElementById('urlSlug').value = post.slug || '';
 
-                // Show modal in edit mode
                 document.getElementById('modalTitle').textContent = 'Edit Post';
                 document.getElementById('postModal').classList.remove('hidden');
 
-                // Important: Store the postId for updating
                 const form = document.getElementById('postForm');
                 form.dataset.mode = 'edit';
                 form.dataset.postId = postId;
@@ -414,35 +504,100 @@
             alert('Error loading post: ' + error.message);
         }
     };
-    tinymce.init({
-        selector: '#editor',
-        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-        height: 400
-    });
 
-    // Add character counter for meta description
-    document.getElementById('metaDescription')?.addEventListener('input', function (e) {
-        const count = e.target.value.length;
-        const counter = document.getElementById('metaCount');
-        if (counter) {
-            counter.textContent = count;
-            counter.className = count > 155 ? 'text-red-500' : 'text-gray-500';
+    // Delete post
+    window.deletePost = async function(postId) {
+        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+            return;
+        }
+
+        try {
+            await db.collection('posts').doc(postId).delete();
+            alert('Post deleted successfully');
+            await loadPosts();
+        } catch (error) {
+            console.error('Error deleting post:', error);
+            alert('Error deleting post: ' + error.message);
+        }
+    };
+
+    // Form submission handler
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const isEditMode = form.dataset.mode === 'edit';
+        const postId = form.dataset.postId;
+
+        const postData = {
+            title: document.getElementById('postTitle').value,
+            content: editor.getHTML(),
+            imageUrl: document.getElementById('imageUrl').value,
+            metaDescription: document.getElementById('metaDescription').value,
+            keywords: document.getElementById('keywords').value,
+            slug: document.getElementById('urlSlug').value,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            seoScore: updateSEOScore().score,
+            excerpt: editor.getText().substring(0, 160) + '...',
+            readingTime: `${Math.ceil(editor.getText().split(/\s+/).length / 200)} min read`,
+            structuredData: {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": document.getElementById('postTitle').value,
+                "description": document.getElementById('metaDescription').value,
+                "image": document.getElementById('imageUrl').value,
+                "dateModified": new Date().toISOString(),
+                "author": {
+                    "@type": "Person",
+                    "name": auth.currentUser.email
+                }
+            }
+        };
+
+        try {
+            if (isEditMode && postId) {
+                await db.collection('posts').doc(postId).update(postData);
+                alert('Post updated successfully!');
+            } else {
+                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                await db.collection('posts').add(postData);
+                alert('Post created successfully!');
+            }
+
+            form.reset();
+            form.dataset.mode = '';
+            form.dataset.postId = '';
+            editor.commands.setContent('');
+            document.getElementById('postModal').classList.add('hidden');
+            await loadPosts();
+
+        } catch (error) {
+            console.error('Error saving post:', error);
+            alert('Error saving post: ' + error.message);
         }
     });
 
-    // Auto-generate slug from title
-    document.getElementById('postTitle')?.addEventListener('input', function (e) {
-        const slug = e.target.value
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
-        const slugInput = document.getElementById('urlSlug');
-        if (slugInput) {
-            slugInput.value = slug;
-        }
+    // Modal handlers
+    // Initialize editor when the modal opens
+    document.getElementById('newPostBtn').addEventListener('click', () => {
+        const form = document.getElementById('postForm');
+        form.reset();
+        form.dataset.mode = 'create';
+        form.dataset.postId = '';
+        initEditor();
+        document.getElementById('modalTitle').textContent = 'New Post';
+        document.getElementById('postModal').classList.remove('hidden');
     });
-    // Modal close handlers
+
+    // Clean up editor when modal closes
+    ['closeModal', 'cancelPost'].forEach(id => {
+        document.getElementById(id).addEventListener('click', () => {
+            if (editor) {
+                editor.destroy();
+            }
+            document.getElementById('postModal').classList.add('hidden');
+        });
+    });
     ['closeModal', 'cancelPost'].forEach(id => {
         document.getElementById(id).addEventListener('click', () => {
             document.getElementById('postModal').classList.add('hidden');
