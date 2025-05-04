@@ -12,38 +12,49 @@
 
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- Tiptap -->
-    <script src="https://unpkg.com/@tiptap/core@2.1.13"></script>
-    <script src="https://unpkg.com/@tiptap/pm@2.1.13"></script>
-    <script src="https://unpkg.com/@tiptap/starter-kit@2.1.13"></script>
-    <script src="https://unpkg.com/@tiptap/extension-image@2.1.13"></script>
-    <script src="https://unpkg.com/@tiptap/extension-link@2.1.13"></script>
-    <script src="https://unpkg.com/@tiptap/extension-placeholder@2.1.13"></script>
+    <!-- Quill Editor (Free alternative) -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-100">
 <!-- Login Section -->
-<div id="loginSection" class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 class="text-2xl font-bold mb-6">Admin Login</h1>
+<div id="loginSection" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-50 to-blue-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-96">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-green-600">Admin Login</h1>
+            <p class="text-gray-500 mt-2">Sign in to manage your blog content</p>
+        </div>
         <form id="loginForm" class="space-y-4">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="email" required
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" id="email" required
+                           class="pl-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                </div>
             </div>
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" required
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="password" required
+                           class="pl-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                </div>
             </div>
             <button type="submit"
-                    class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors font-medium">
                 Login
             </button>
         </form>
@@ -58,12 +69,20 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
                     <h1 class="text-xl font-bold text-green-600">Blog Admin</h1>
-                    <a href="/" class="text-gray-600 hover:text-green-600">Home</a>
-                    <a href="/blog" class="text-gray-600 hover:text-green-600">View Blog</a>
+                    <a href="/" class="text-gray-600 hover:text-green-600 flex items-center gap-2">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="/blog" class="text-gray-600 hover:text-green-600 flex items-center gap-2">
+                        <i class="fas fa-book"></i> View Blog
+                    </a>
                 </div>
                 <div class="flex items-center">
-                    <span id="userEmail" class="mr-4 text-gray-600"></span>
-                    <button id="logoutBtn" class="text-gray-600 hover:text-gray-900">Logout</button>
+                    <span id="userEmail" class="mr-4 text-gray-600 flex items-center">
+                        <i class="fas fa-user mr-2"></i> <span id="userEmailText"></span>
+                    </span>
+                    <button id="logoutBtn" class="text-gray-600 hover:text-gray-900 flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
             </div>
         </div>
@@ -74,8 +93,8 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">Blog Posts</h2>
             <button id="newPostBtn"
-                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
-                New Post
+                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors flex items-center gap-2">
+                <i class="fas fa-plus"></i> New Post
             </button>
         </div>
 
@@ -84,88 +103,124 @@
 </div>
 
 <!-- Post Modal -->
-<div id="postModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-    <div class="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold" id="modalTitle">New Post</h3>
-            <button id="closeModal" class="text-gray-600 hover:text-gray-900">&times;</button>
+<div id="postModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-10 mx-auto p-6 border w-full max-w-4xl shadow-2xl rounded-md bg-white mb-10">
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <h3 class="text-2xl font-bold text-gray-800" id="modalTitle">New Post</h3>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
 
-        <form id="postForm" class="space-y-4">
-            <!-- Title -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Title</label>
-                <input type="text" id="postTitle" required
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                <p class="mt-1 text-sm text-gray-500">Character count: <span id="titleCount">0</span>/60 (Optimal: 50-60)</p>
-            </div>
-
-            <!-- SEO Section -->
-            <div class="border-t pt-4">
-                <h4 class="font-medium mb-2">SEO Settings</h4>
-                <div class="space-y-4">
+        <form id="postForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Main content - 2/3 width -->
+                <div class="md:col-span-2 space-y-6">
+                    <!-- Title -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Meta Description</label>
-                        <textarea id="metaDescription" maxlength="160"
-                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                                  placeholder="Enter a compelling description (max 160 characters)"></textarea>
-                        <p class="mt-1 text-sm text-gray-500">Characters: <span id="metaCount">0</span>/160 (Optimal: 150-160)</p>
+                        <label class="block text-sm font-medium text-gray-700">Title</label>
+                        <input type="text" id="postTitle" required
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
+                        <p class="mt-1 text-sm text-gray-500">Character count: <span id="titleCount">0</span>/60 (Optimal: 50-60)</p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Keywords</label>
-                        <input type="text" id="keywords"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                               placeholder="english learning, ielts tips, etc (comma separated)">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">URL Slug</label>
-                        <input type="text" id="urlSlug"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                               placeholder="your-post-url">
-                    </div>
-                </div>
-            </div>
 
-            <!-- Featured Image -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Featured Image URL</label>
-                <div class="mt-1">
-                    <input type="url" id="imageUrl"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                           placeholder="https://example.com/image.jpg">
-                    <p class="mt-2 text-sm text-gray-500">
-                        Recommended size: 1200x630px for optimal social sharing
-                    </p>
-                </div>
-            </div>
-
-            <!-- Rich Text Editor -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Content</label>
-                <div class="editor-container">
-                    <div class="editor-toolbar" id="editor-toolbar"></div>
-                    <div id="editor" class="prose max-w-full"></div>
-                    <div class="seo-score">
-                        <div class="flex justify-between mb-2">
-                            <span>SEO Score</span>
-                            <span id="seo-score-value">0%</span>
+                    <!-- Rich Text Editor -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Content</label>
+                        <div class="editor-container border border-gray-300 rounded-md overflow-hidden">
+                            <div id="editor" class="prose max-w-full min-h-[350px]"></div>
                         </div>
-                        <div class="seo-score-bar">
-                            <div class="seo-score-fill" id="seo-score-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar - 1/3 width -->
+                <div class="md:col-span-1 space-y-6">
+                    <!-- SEO Score Card -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-medium flex items-center">
+                                <i class="fas fa-chart-line mr-2 text-green-600"></i> SEO Score
+                            </h4>
+                            <div id="seo-score-badge" class="px-2 py-1 bg-gray-200 text-gray-800 text-xs rounded-full font-medium">
+                                <span id="seo-score-value">0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Title</span>
+                                <span id="seo-title-status">⚪ Not checked</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Description</span>
+                                <span id="seo-desc-status">⚪ Not checked</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Content Length</span>
+                                <span id="seo-content-status">⚪ Not checked</span>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>Keywords</span>
+                                <span id="seo-keyword-status">⚪ Not checked</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Settings -->
+                    <div class="space-y-4">
+                        <h4 class="font-medium flex items-center">
+                            <i class="fas fa-cog mr-2 text-gray-600"></i> SEO Settings
+                        </h4>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Meta Description</label>
+                            <textarea id="metaDescription" maxlength="160"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                                    placeholder="Enter a compelling description (max 160 characters)" rows="3"></textarea>
+                            <p class="mt-1 text-xs text-gray-500">Characters: <span id="metaCount">0</span>/160 (Optimal: 150-160)</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Keywords</label>
+                            <input type="text" id="keywords"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                                  placeholder="english learning, ielts tips, etc (comma separated)">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">URL Slug</label>
+                            <input type="text" id="urlSlug"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                                  placeholder="your-post-url">
+                        </div>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 flex items-center">
+                            <i class="fas fa-image mr-2 text-gray-600"></i> Featured Image
+                        </label>
+                        <div class="mt-1">
+                            <input type="url" id="imageUrl"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
+                                  placeholder="https://example.com/image.jpg">
+                            <p class="mt-2 text-xs text-gray-500">
+                                Recommended size: 1200x630px for optimal social sharing
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Save Button -->
-            <div class="flex justify-end space-x-4">
+            <div class="flex justify-end space-x-4 pt-4 border-t">
                 <button type="button" id="cancelPost"
-                        class="px-4 py-2 border rounded-md hover:bg-gray-100">
-                    Cancel
+                        class="px-4 py-2 border rounded-md hover:bg-gray-100 flex items-center gap-2">
+                    <i class="fas fa-times"></i> Cancel
                 </button>
                 <button type="submit"
-                        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                    Save Post
+                        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
+                    <i class="fas fa-save"></i> Save Post
                 </button>
             </div>
         </form>
@@ -189,62 +244,108 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Initializetiptap
-    let editor;
-
+    // Initialize Editor
+    let quill;
 
     function initEditor() {
-        const toolbar = document.getElementById('editor-toolbar');
+        // Initialize Quill editor
+        if (quill) {
+            quill.deleteText(0, quill.getLength());
+        } else {
+            const toolbarOptions = [
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['blockquote', 'code-block'],
+                ['link', 'image'],
 
-        editor = new Editor({
-            element: document.getElementById('editor'),
-            extensions: [
-                StarterKit,
-                Image,
-                Link,
-                Placeholder.configure({
-                    placeholder: 'Start writing your post...'
-                })
-            ],
-            content: '',
-            onUpdate: ({ editor }) => {
+                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                [{ 'direction': 'rtl' }],                         // text direction
+
+                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults
+                [{ 'font': [] }],
+                [{ 'align': [] }],
+
+                ['clean']                                         // remove formatting button
+            ];
+
+            quill = new Quill('#editor', {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                theme: 'snow'
+            });
+            
+            quill.on('text-change', function() {
                 updateSEOScore();
-            }
-        });
+            });
+        }
 
         function updateSEOScore() {
             const title = document.getElementById('postTitle').value;
-            const content = editor.getHTML();
+            const content = quill.root.innerHTML;
             const metaDescription = document.getElementById('metaDescription').value;
             const keywords = document.getElementById('keywords').value;
 
             let score = 0;
             const issues = [];
-
-            // Title analysis (20 points)
-            if (title.length >= 40 && title.length <= 60) {
+            
+            // Title status
+            const titleElement = document.getElementById('seo-title-status');
+            if (title.length >= 50 && title.length <= 60) {
                 score += 20;
+                titleElement.innerHTML = '🟢 Excellent';
+                titleElement.className = 'text-green-600 text-xs';
+            } else if (title.length >= 40 && title.length < 50) {
+                score += 15;
+                titleElement.innerHTML = '🟡 Good';
+                titleElement.className = 'text-yellow-600 text-xs';
             } else {
+                titleElement.innerHTML = '🔴 Needs work';
+                titleElement.className = 'text-red-600 text-xs';
                 issues.push(`Title length should be 40-60 characters (current: ${title.length})`);
             }
 
-            // Meta description analysis (20 points)
+            // Meta description status
+            const descElement = document.getElementById('seo-desc-status');
             if (metaDescription.length >= 150 && metaDescription.length <= 160) {
                 score += 20;
+                descElement.innerHTML = '🟢 Excellent';
+                descElement.className = 'text-green-600 text-xs';
+            } else if (metaDescription.length >= 120 && metaDescription.length < 150) {
+                score += 15;
+                descElement.innerHTML = '🟡 Good';
+                descElement.className = 'text-yellow-600 text-xs';
             } else {
+                descElement.innerHTML = '🔴 Needs work';
+                descElement.className = 'text-red-600 text-xs';
                 issues.push(`Meta description should be 150-160 characters (current: ${metaDescription.length})`);
             }
 
-            // Content length analysis (20 points)
-            const plainText = content.replace(/<[^>]*>/g, '');
-            const wordCount = plainText.split(/\s+/).length;
+            // Content length status
+            const contentElement = document.getElementById('seo-content-status');
+            const plainText = quill.getText();
+            const wordCount = plainText.split(/\s+/).filter(word => word.length > 0).length;
             if (wordCount >= 300) {
                 score += 20;
+                contentElement.innerHTML = '🟢 Excellent';
+                contentElement.className = 'text-green-600 text-xs';
+            } else if (wordCount >= 200 && wordCount < 300) {
+                score += 10;
+                contentElement.innerHTML = '🟡 Good';
+                contentElement.className = 'text-yellow-600 text-xs';
             } else {
+                contentElement.innerHTML = '🔴 Needs work';
+                contentElement.className = 'text-red-600 text-xs';
                 issues.push(`Content should be at least 300 words (current: ${wordCount})`);
             }
 
-            // Keyword usage analysis (20 points)
+            // Keyword status
+            const keywordElement = document.getElementById('seo-keyword-status');
             if (keywords) {
                 const keywordList = keywords.split(',').map(k => k.trim().toLowerCase());
                 const contentLower = plainText.toLowerCase();
@@ -256,78 +357,53 @@
                     }
                 });
 
-                score += Math.min((keywordFound / keywordList.length) * 20, 20);
+                const keywordScore = Math.min((keywordFound / keywordList.length) * 20, 20);
+                score += keywordScore;
+                
+                if (keywordScore >= 15) {
+                    keywordElement.innerHTML = '🟢 Excellent';
+                    keywordElement.className = 'text-green-600 text-xs';
+                } else if (keywordScore >= 10) {
+                    keywordElement.innerHTML = '🟡 Good';
+                    keywordElement.className = 'text-yellow-600 text-xs';
+                } else {
+                    keywordElement.innerHTML = '🔴 Needs work';
+                    keywordElement.className = 'text-red-600 text-xs';
+                    issues.push('Use more keywords in your content');
+                }
             } else {
+                keywordElement.innerHTML = '🔴 Missing';
+                keywordElement.className = 'text-red-600 text-xs';
                 issues.push('No keywords specified');
             }
 
             // Structure analysis (20 points)
             let structureScore = 0;
-            if (content.includes('<h1>')) structureScore += 5;
-            if (content.includes('<h2>')) structureScore += 5;
+            if (content.includes('<h1')) structureScore += 5;
+            if (content.includes('<h2')) structureScore += 5;
             if (content.includes('<p>')) structureScore += 5;
             if (content.includes('<img')) structureScore += 5;
             score += structureScore;
 
             // Update UI
             const scoreElement = document.getElementById('seo-score-value');
-            const scoreFill = document.getElementById('seo-score-fill');
-
+            const scoreBadge = document.getElementById('seo-score-badge');
+            
             scoreElement.textContent = `${Math.round(score)}%`;
-            scoreFill.style.width = `${score}%`;
-            scoreFill.style.backgroundColor = score >= 80 ? '#059669' : score >= 60 ? '#FBBF24' : '#DC2626';
+            
+            if (score >= 80) {
+                scoreBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium';
+            } else if (score >= 60) {
+                scoreBadge.className = 'px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium';
+            } else {
+                scoreBadge.className = 'px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full font-medium';
+            }
 
             // Return score and issues for potential display
             return { score, issues };
         }
-        // Create toolbar buttons
-        const buttons = [
-            { command: 'toggleBold', icon: 'B', title: 'Bold' },
-            { command: 'toggleItalic', icon: 'I', title: 'Italic' },
-            { command: 'toggleHeading', args: { level: 1 }, icon: 'H1', title: 'Heading 1' },
-            { command: 'toggleHeading', args: { level: 2 }, icon: 'H2', title: 'Heading 2' },
-            { command: 'toggleBulletList', icon: '•', title: 'Bullet List' },
-            { command: 'toggleOrderedList', icon: '1.', title: 'Numbered List' },
-            { command: 'toggleBlockquote', icon: '"', title: 'Quote' },
-            {
-                command: 'insertImage',
-                icon: '🖼️',
-                title: 'Insert Image',
-                action: () => {
-                    const url = prompt('Enter image URL:');
-                    if (url) {
-                        editor.chain().focus().setImage({ src: url }).run();
-                    }
-                }
-            },
-            {
-                command: 'toggleLink',
-                icon: '🔗',
-                title: 'Insert Link',
-                action: () => {
-                    const url = prompt('Enter URL:');
-                    if (url) {
-                        editor.chain().focus().toggleLink({ href: url }).run();
-                    }
-                }
-            }
-        ];
 
-        buttons.forEach(({ command, icon, title, args, action }) => {
-            const button = document.createElement('button');
-            button.textContent = icon;
-            button.title = title;
-            button.onclick = () => {
-                if (action) {
-                    action();
-                } else if (args) {
-                    editor.chain().focus()[command](args).run();
-                } else {
-                    editor.chain().focus()[command]().run();
-                }
-            };
-            toolbar.appendChild(button);
-        });
+        return true;
     }
 
     // Auth state observer
@@ -335,7 +411,7 @@
         document.getElementById('loginSection').style.display = user ? 'none' : 'flex';
         document.getElementById('adminPanel').style.display = user ? 'block' : 'none';
         if (user) {
-            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userEmailText').textContent = user.email;
             loadPosts();
         }
     });
@@ -417,18 +493,27 @@
 
             if (querySnapshot.empty) {
                 postsDiv.innerHTML = `
-                        <div class="text-center py-8">
+                        <div class="text-center py-12 bg-white rounded-lg shadow">
+                            <i class="fas fa-pen-nib text-gray-300 text-5xl mb-4"></i>
                             <p class="text-xl text-gray-600">No posts yet</p>
-                            <p class="mt-2 text-gray-500">Create your first post!</p>
+                            <p class="mt-2 text-gray-500">Create your first post to get started!</p>
+                            <button id="emptyStateNewPost" class="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 inline-flex items-center gap-2">
+                                <i class="fas fa-plus"></i> Create New Post
+                            </button>
                         </div>
                     `;
+                
+                document.getElementById('emptyStateNewPost').addEventListener('click', () => {
+                    document.getElementById('newPostBtn').click();
+                });
+                
                 return;
             }
 
             querySnapshot.forEach((doc) => {
                 const post = doc.data();
                 const postEl = document.createElement('div');
-                postEl.className = 'bg-white p-6 rounded-lg shadow flex justify-between items-center mb-4';
+                postEl.className = 'bg-white p-6 rounded-lg shadow flex justify-between items-center mb-4 hover:shadow-md transition-shadow';
 
                 const seoScore = calculateSEOScore(post);
                 const seoScoreClass = seoScore >= 80 ? 'bg-green-100 text-green-800' :
@@ -439,28 +524,28 @@
                         <div class="flex-grow">
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="font-bold text-xl">${post.title}</h3>
-                                <span class="px-2 py-1 ${seoScoreClass} text-xs rounded">
-                                    SEO: ${seoScore}%
+                                <span class="px-2 py-1 ${seoScoreClass} text-xs rounded-full flex items-center gap-1">
+                                    <i class="fas fa-chart-line"></i> SEO: ${seoScore}%
                                 </span>
                             </div>
                             <div class="text-sm text-gray-600">
-                                <p>Published: ${post.createdAt?.toDate().toLocaleDateString()}</p>
-                                <p class="text-sm text-gray-500">${post.metaDescription || ''}</p>
+                                <p class="flex items-center gap-1"><i class="far fa-calendar-alt text-gray-400"></i> Published: ${post.createdAt?.toDate().toLocaleDateString()}</p>
+                                <p class="text-sm text-gray-500 mt-1 line-clamp-1">${post.metaDescription || ''}</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
                             <a href="/mirage/blog/post.html?slug=${post.slug}"
                                target="_blank"
-                               class="text-blue-600 hover:text-blue-800">
-                                View
+                               class="text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                                <i class="fas fa-external-link-alt"></i> View
                             </a>
                             <button onclick="editPost('${doc.id}')"
-                                    class="text-green-600 hover:text-green-800">
-                                Edit
+                                    class="text-green-600 hover:text-green-800 flex items-center gap-1">
+                                <i class="fas fa-edit"></i> Edit
                             </button>
                             <button onclick="deletePost('${doc.id}')"
-                                    class="text-red-600 hover:text-red-800">
-                                Delete
+                                    class="text-red-600 hover:text-red-800 flex items-center gap-1">
+                                <i class="fas fa-trash-alt"></i> Delete
                             </button>
                         </div>
                     `;
@@ -470,10 +555,16 @@
         } catch (error) {
             console.error('Error loading posts:', error);
             postsDiv.innerHTML = `
-                    <div class="text-center py-8">
+                    <div class="text-center py-8 bg-red-50 rounded-lg border border-red-200">
+                        <i class="fas fa-exclamation-circle text-red-500 text-3xl mb-2"></i>
                         <p class="text-red-600">Error loading posts: ${error.message}</p>
+                        <button id="retryLoad" class="mt-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                            Retry
+                        </button>
                     </div>
                 `;
+                
+            document.getElementById('retryLoad')?.addEventListener('click', loadPosts);
         }
     }
 
@@ -486,7 +577,6 @@
                 const post = postDoc.data();
 
                 document.getElementById('postTitle').value = post.title || '';
-                tinymce.get('editor').setContent(post.content || '');
                 document.getElementById('imageUrl').value = post.imageUrl || '';
                 document.getElementById('metaDescription').value = post.metaDescription || '';
                 document.getElementById('keywords').value = post.keywords || '';
@@ -498,6 +588,14 @@
                 const form = document.getElementById('postForm');
                 form.dataset.mode = 'edit';
                 form.dataset.postId = postId;
+                
+                // Initialize the editor if not already initialized
+                initEditor();
+                
+                // Set content
+                if (post.content) {
+                    quill.clipboard.dangerouslyPasteHTML(post.content);
+                }
             }
         } catch (error) {
             console.error('Error loading post for edit:', error);
@@ -529,17 +627,31 @@
         const isEditMode = form.dataset.mode === 'edit';
         const postId = form.dataset.postId;
 
+        // Check if editor is initialized
+        if (!quill) {
+            alert('Editor not initialized. Please try again.');
+            return;
+        }
+
+        // Get content
+        const content = quill.root.innerHTML;
+        const plainText = quill.getText();
+
+        // Calculate SEO score
+        const seoScoreElement = document.getElementById('seo-score-value');
+        const seoScore = parseInt(seoScoreElement.textContent, 10) || 0;
+
         const postData = {
             title: document.getElementById('postTitle').value,
-            content: editor.getHTML(),
+            content: content,
             imageUrl: document.getElementById('imageUrl').value,
             metaDescription: document.getElementById('metaDescription').value,
             keywords: document.getElementById('keywords').value,
             slug: document.getElementById('urlSlug').value,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            seoScore: updateSEOScore().score,
-            excerpt: editor.getText().substring(0, 160) + '...',
-            readingTime: `${Math.ceil(editor.getText().split(/\s+/).length / 200)} min read`,
+            seoScore: seoScore,
+            excerpt: plainText.substring(0, 160) + '...',
+            readingTime: `${Math.ceil(plainText.split(/\s+/).filter(word => word.length > 0).length / 200)} min read`,
             structuredData: {
                 "@context": "https://schema.org",
                 "@type": "BlogPosting",
@@ -567,7 +679,11 @@
             form.reset();
             form.dataset.mode = '';
             form.dataset.postId = '';
-            editor.commands.setContent('');
+            
+            if (quill) {
+                quill.setText('');
+            }
+            
             document.getElementById('postModal').classList.add('hidden');
             await loadPosts();
 
@@ -584,25 +700,62 @@
         form.reset();
         form.dataset.mode = 'create';
         form.dataset.postId = '';
+        
         initEditor();
+        
         document.getElementById('modalTitle').textContent = 'New Post';
         document.getElementById('postModal').classList.remove('hidden');
     });
 
     // Clean up editor when modal closes
-    ['closeModal', 'cancelPost'].forEach(id => {
-        document.getElementById(id).addEventListener('click', () => {
-            if (editor) {
-                editor.destroy();
-            }
-            document.getElementById('postModal').classList.add('hidden');
-        });
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('postModal').classList.add('hidden');
     });
-    ['closeModal', 'cancelPost'].forEach(id => {
-        document.getElementById(id).addEventListener('click', () => {
-            document.getElementById('postModal').classList.add('hidden');
-        });
+    
+    document.getElementById('cancelPost').addEventListener('click', () => {
+        document.getElementById('postModal').classList.add('hidden');
     });
 </script>
+
+<style>
+.ql-toolbar.ql-snow {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.ql-container.ql-snow {
+    border: none;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Additional styles for better UI */
+.ql-editor {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .editor-container {
+        min-height: 200px;
+    }
+}
+</style>
 </body>
 </html>
