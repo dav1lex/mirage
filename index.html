@@ -1,28 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
+<html lang="pl" xmlns:x-transition="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Professional English Tutoring | Online Classes with Native Speakers</title>
+    <!-- Primary Meta Tags -->
+    <title>Kurs Angielskiego dla Ósmoklasistów | Przygotowanie do Egzaminu | Solidny Od Podszewki</title>
     <meta name="description"
-          content="Transform your English with personalized online tutoring. Native speakers, IELTS preparation, Business English, and conversation practice. Free trial lesson available.">
-
-    <meta property="og:title" content="Professional English Tutoring | Online Classes">
-    <meta property="og:description"
-          content="Learn English with experienced native speakers. Personalized lessons, flexible scheduling, and proven results.">
-    <meta property="og:image" content="/assets/images/tutor-preview.jpg">
-    <meta property="og:type" content="website">
-
-    <link rel="canonical" href="https://yourdomain.com">
-    <meta name="robots" content="index, follow">
-
+        content="Profesjonalny kurs angielskiego 'Solidny Od Podszewki' przygotowujący do egzaminu ósmoklasisty. 25 spotkań online w małych grupach. Wszystkie zagadnienia zgodne z CKE. Zapisy otwarte!">
     <meta name="keywords"
-          content="english tutor, online english classes, ielts preparation, business english, english conversation, native speakers">
+        content="kurs angielskiego, egzamin ósmoklasisty, nauka angielskiego, przygotowanie do egzaminu, lekcje online, angielski dla dzieci">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kursangielski.pl/">
+    <meta property="og:title" content="Kurs Solidny Od Podszewki | Przygotowanie do Egzaminu Ósmoklasisty">
+    <meta property="og:description"
+        content="Ustrukturyzowany kurs repetytoryjny z języka angielskiego. 25 spotkań online, małe grupy, nauka według wymagań CKE.">
+    <meta property="og:image" content="/assets/images/tutor-preview.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://kursangielski.pl/">
+    <meta property="twitter:title" content="Kurs Solidny Od Podszewki | Przygotowanie do Egzaminu Ósmoklasisty">
+    <meta property="twitter:description"
+        content="Ustrukturyzowany kurs repetytoryjny z języka angielskiego. 25 spotkań online, małe grupy, nauka według wymagań CKE.">
+    <meta property="twitter:image" content="/assets/images/tutor-preview.jpg">
+
+    <link rel="canonical" href="https://kursangielski.pl">
+    <meta name="robots" content="index, follow">
 
     <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -30,16 +44,25 @@
         {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
-            "name": "EnglishPro Tutoring",
-            "description": "Professional English tutoring services with native speakers",
+            "name": "Kursy Angielski - Solidny Od Podszewki",
+            "description": "Profesjonalne kursy języka angielskiego przygotowujące do egzaminu ósmoklasisty",
             "address": {
                 "@type": "PostalAddress",
-                "addressCountry": "Online"
+                "addressCountry": "Polska"
             },
             "offers": {
                 "@type": "Offer",
-                "price": "29.00",
-                "priceCurrency": "USD"
+                "name": "Kurs Solidny Od Podszewki",
+                "price": "1399.00",
+                "priceCurrency": "PLN",
+                "description": "25 spotkań online, materiały dydaktyczne, ocena prac zgodnie z CKE",
+                "availability": "https://schema.org/InStock"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+48503125793",
+                "email": "kurs8klasisty@gmail.com",
+                "contactType": "customer service"
             }
         }
     </script>
@@ -66,419 +89,848 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
     </script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #4ade80 0%, #60a5fa 100%);
+        }
+
+        .btn-primary {
+            @apply bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-lg;
+        }
+
+        .section-title {
+            @apply text-3xl font-bold mb-12 relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #4ade80;
+        }
+
+        .section-title.centered::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-logo {
+            background: #4ade80;
+            background: linear-gradient(to right, #4ade80 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+    </style>
 </head>
-<body class="font-sans">
-<nav x-data="{ isOpen: false }" class="bg-white shadow-lg fixed w-full z-50">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <a href="/" class="text-2xl font-bold text-green-600">EnglishPro</a>
-            </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="text-gray-700 hover:text-green-600">Home</a>
-                <a href="#packages" class="text-gray-700 hover:text-green-600">Packages</a>
-                <a href="#about" class="text-gray-700 hover:text-green-600">About</a>
-                <a href="/blog" class="text-gray-700 hover:text-green-600">Blog</a>
-                <a href="#contact" class="text-gray-700 hover:text-green-600">Contact</a>
-            </div>
-            <button @click="isOpen = !isOpen" class="md:hidden">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-        </div>
-        <div x-show="isOpen" class="md:hidden">
-            <a href="#home" class="block py-2 text-gray-700">Home</a>
-            <a href="#packages" class="block py-2 text-gray-700">Packages</a>
-            <a href="#about" class="block py-2 text-gray-700">About</a>
-            <a href="/blog" class="block py-2 text-gray-700">Blog</a>
-            <a href="#contact" class="block py-2 text-gray-700">Contact</a>
-        </div>
-    </div>
-</nav>
 
-<main>
-    <section id="home" class="pt-20 bg-gradient-to-b from-blue-50 to-green-50 min-h-screen flex items-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
-                    Master English with Professional Guidance
-                </h1>
-                <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg">
-                    Personalized lessons tailored to your goals and learning style
-                </p>
-                <div class="mt-5 sm:mt-8">
-                    <button class="rounded-md bg-green-600 px-8 py-3 text-white hover:bg-green-700">
-                        Start Learning
-                    </button>
+<body class="font-sans bg-gray-50" x-data="{ mobileMenuOpen: false }">
+    <nav class="bg-white shadow-lg fixed w-full z-50" x-data="{ isOpen: false }">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <span class="text-2xl nav-logo">KursAngielski</span>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section id="why-us" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Why Choose Us?</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-blue-50 p-6 rounded-lg">
-                    <div class="text-green-600 text-2xl mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">O kursie</a>
+                    <a href="#features" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Co zawiera</a>
+                    <a href="#for-who" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Dla kogo</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Cena</a>
+                    <a href="/blog" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Blog</a>
+                    <a href="#contact" class="text-gray-700 hover:text-green-500 font-medium transition duration-300"
+                        @click="mobileMenuOpen = false">Kontakt</a>
+                </div>
+                <div class="flex items-center">
+                    <a href="#contact"
+                        class="hidden md:block bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg font-medium transition duration-300">
+                        Zapisz się
+                    </a>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden ml-4">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Personalized Approach</h3>
-                    <p class="text-gray-600">Tailored lessons that match your learning style and goals</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-lg">
-                    <div class="text-green-600 text-2xl mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Flexible Schedule</h3>
-                    <p class="text-gray-600">Choose times that work best for your busy schedule</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-lg">
-                    <div class="text-green-600 text-2xl mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Native Speaker</h3>
-                    <p class="text-gray-600">Learn from experienced native English speakers</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="packages" class="py-20 bg-blue-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Our Packages</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-bold text-center mb-4">Basic</h3>
-                    <div class="text-center text-4xl font-bold mb-4">$29</div>
-                    <div class="text-center text-gray-500 mb-6">per month</div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            4 Lessons Monthly
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Study Materials
-                        </li>
-                    </ul>
-                    <button class="w-full py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700">
-                        Choose Plan
-                    </button>
-                </div>
-
-                <div class="bg-white p-8 rounded-lg shadow-lg transform scale-105 border-2 border-green-500">
-                    <div class="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 text-sm rounded-bl">Popular
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-4">Standard</h3>
-                    <div class="text-center text-4xl font-bold mb-4">$49</div>
-                    <div class="text-center text-gray-500 mb-6">per month</div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            8 Lessons Monthly
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Study Materials
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Progress Tracking
-                        </li>
-                    </ul>
-                    <button class="w-full py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700">
-                        Choose Plan
-                    </button>
-                </div>
-
-                <div class="bg-white p-8 rounded-lg shadow-lg">
-                    <h3 class="text-xl font-bold text-center mb-4">Premium</h3>
-                    <div class="text-center text-4xl font-bold mb-4">$89</div>
-                    <div class="text-center text-gray-500 mb-6">per month</div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            12 Lessons Monthly
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            All Materials
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            24/7 Support
-                        </li>
-                    </ul>
-                    <button class="w-full py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700">
-                        Choose Plan
                     </button>
                 </div>
             </div>
         </div>
-    </section>
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">About Your Teacher</h2>
-                    <p class="text-gray-600 mb-4">
-                        Native English speaker with over 8 years of teaching experience. Specialized in IELTS, TOEFL,
-                        and Business English.
+        <!-- Mobile menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2" @click.away="mobileMenuOpen = false"
+            class="absolute top-20 left-0 right-0 bg-white shadow-lg z-50 border-t md:hidden">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Home</a>
+                <a href="#about" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">O kursie</a>
+                <a href="#features" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Co zawiera</a>
+                <a href="#for-who" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Dla kogo</a>
+                <a href="#pricing" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Cena</a>
+                <a href="/blog" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Blog</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                    @click="mobileMenuOpen = false">Kontakt</a>
+                <a href="#contact"
+                    class="block mt-2 bg-green-500 text-white px-3 py-2 rounded-md text-center font-medium"
+                    @click="mobileMenuOpen = false">
+                    Zapisz się
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="pt-32 pb-16 hero-gradient min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-white">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                            Kurs SOLIDNY OD PODSZEWKI
+                        </h1>
+                        <p class="text-xl mb-8 text-indigo-100">
+                            Profesjonalne przygotowanie do egzaminu ósmoklasisty z języka angielskiego. Dołącz do zajęć
+                            online i osiągnij swój wymarzony wynik!
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#contact" class="btn-primary flex items-center justify-center gap-2">
+                                <i class="fas fa-user-plus"></i> Zapisz się teraz
+                            </a>
+                            <a href="#about"
+                                class="bg-white text-indigo-600 hover:bg-indigo-50 font-medium px-6 py-3 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                                <i class="fas fa-info-circle"></i> Dowiedz się więcej
+                            </a>
+                        </div>
+                        <div class="mt-8 grid grid-cols-3 gap-4">
+                            <div class="text-center bg-indigo-800 bg-opacity-30 rounded-lg p-3">
+                                <div class="text-3xl font-bold">25</div>
+                                <div class="text-sm">spotkań</div>
+                            </div>
+                            <div class="text-center bg-indigo-800 bg-opacity-30 rounded-lg p-3">
+                                <div class="text-3xl font-bold">60</div>
+                                <div class="text-sm">minut</div>
+                            </div>
+                            <div class="text-center bg-indigo-800 bg-opacity-30 rounded-lg p-3">
+                                <div class="text-3xl font-bold">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="text-sm">małe grupy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <img src="https://images.unsplash.com/photo-1610484826967-09c5720778c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                            alt="Student learning English"
+                            class="rounded-xl shadow-2xl transform -rotate-3 hover:rotate-0 transition duration-500">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">O kursie</h2>
+                    <p class="text-xl text-gray-600">
+                        Ustrukturyzowany kurs repetytoryjny, przygotowujący do egzaminu ósmoklasisty z języka
+                        angielskiego.
                     </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            CELTA Certified
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Master's in TESOL
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            5000+ Teaching Hours
-                        </li>
-                    </ul>
                 </div>
-                <div class="relative h-96">
-                    <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98"
-                         alt="English Teacher"
-                         class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-lg">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="faq" class="py-20 bg-white" x-data="{ selected: null }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-            <div class="max-w-3xl mx-auto space-y-4">
-                <div class="border rounded-lg">
-                    <button @click="selected !== 1 ? selected = 1 : selected = null"
-                            class="flex justify-between items-center w-full p-4 text-left">
-                        <span>How are the lessons conducted?</span>
-                        <svg class="w-5 h-5 transform transition-transform"
-                             :class="selected === 1 ? 'rotate-180' : ''"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div x-show="selected === 1"
-                         x-transition:enter="transition-all ease-out duration-300"
-                         x-transition:enter-start="opacity-0 transform -translate-y-3"
-                         x-transition:enter-end="opacity-100 transform translate-y-0"
-                         class="p-4 pt-0 text-gray-600">
-                        Lessons are conducted via Zoom or Skype. Each session is 60 minutes long with interactive
-                        materials and real-time feedback.
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-indigo-50 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                        <div class="text-indigo-600 text-3xl mb-4">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Harmonogram</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>25 spotkań po 60 minut</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Zajęcia w sobotnie poranki</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Start: 20 września 2025</span>
+                            </li>
+                        </ul>
                     </div>
-                </div>
 
-                <div class="border rounded-lg">
-                    <button @click="selected !== 2 ? selected = 2 : selected = null"
-                            class="flex justify-between items-center w-full p-4 text-left">
-                        <span>What happens if I miss a lesson?</span>
-                        <svg class="w-5 h-5 transform transition-transform"
-                             :class="selected === 2 ? 'rotate-180' : ''"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div x-show="selected === 2"
-                         x-transition:enter="transition-all ease-out duration-300"
-                         x-transition:enter-start="opacity-0 transform -translate-y-3"
-                         x-transition:enter-end="opacity-100 transform translate-y-0"
-                         class="p-4 pt-0 text-gray-600">
-                        Please notify 24 hours in advance for rescheduling. Last-minute cancellations may result in a
-                        deduction from your lesson package.
+                    <div class="bg-indigo-50 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                        <div class="text-indigo-600 text-3xl mb-4">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Format zajęć</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Zajęcia online na platformie ZOOM</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Małe grupy dla lepszej interakcji</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Możliwość wyboru godziny: 10:00-11:00 lub 11:15-12:15</span>
+                            </li>
+                        </ul>
                     </div>
-                </div>
 
-                <div class="border rounded-lg">
-                    <button @click="selected !== 3 ? selected = 3 : selected = null"
-                            class="flex justify-between items-center w-full p-4 text-left">
-                        <span>Do you provide learning materials?</span>
-                        <svg class="w-5 h-5 transform transition-transform"
-                             :class="selected === 3 ? 'rotate-180' : ''"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div x-show="selected === 3"
-                         x-transition:enter="transition-all ease-out duration-300"
-                         x-transition:enter-start="opacity-0 transform -translate-y-3"
-                         x-transition:enter-end="opacity-100 transform translate-y-0"
-                         class="p-4 pt-0 text-gray-600">
-                        Yes, all students receive access to our digital learning platform with course materials,
-                        exercises, and homework assignments.
+                    <div class="bg-indigo-50 p-8 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                        <div class="text-indigo-600 text-3xl mb-4">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Egzamin</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Zgodny z wymaganiami CKE</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Struktura zajęć odpowiadająca egzaminowi</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>Regularne powtórki i praktyczne wskazówki</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="testimonials" class="py-20 bg-blue-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Student Testimonials</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
-                            S
-                        </div>
-                        <div class="ml-4">
-                            <div class="font-semibold">Sarah Johnson</div>
-                            <div class="text-gray-500">IELTS Student</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">Achieved my target IELTS score after 3 months of lessons. The structured
-                        approach and practice tests were invaluable.</p>
+        <section id="features" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Co zawiera kurs?</h2>
+                    <p class="text-xl text-gray-600">
+                        Kompleksowe przygotowanie do wszystkich aspektów egzaminu ósmoklasisty
+                    </p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
-                            M
-                        </div>
-                        <div class="ml-4">
-                            <div class="font-semibold">Michael Chen</div>
-                            <div class="text-gray-500">Business English</div>
-                        </div>
+                <div class="grid md:grid-cols-2 gap-x-12 gap-y-8 items-center">
+                    <div>
+                        <ul class="space-y-6">
+                            <li class="flex">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-2">14 modułów tematycznych</h4>
+                                    <p class="text-gray-600">Kurs obejmuje wszystkie zagadnienia wymagane na egzaminie,
+                                        podzielone na przystępne moduły tematyczne.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
+                                        <i class="fas fa-language"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-2">Zagadnienia gramatyczne</h4>
+                                    <p class="text-gray-600">Wszystkie struktury gramatyczne obowiązujące na egzaminie,
+                                        wyjaśnione w przystępny sposób z praktycznymi ćwiczeniami.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
+                                        <i class="fas fa-headphones"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-2">Ćwiczenia na słuchanie</h4>
+                                    <p class="text-gray-600">Regularne ćwiczenia rozwijające umiejętność słuchania ze
+                                        zrozumieniem, zgodne z formatem egzaminacyjnym.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-600 text-white">
+                                        <i class="fas fa-pen"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900 mb-2">Prace pisemne</h4>
+                                    <p class="text-gray-600">Minimum 4 prace pisemne sprawdzane i oceniane według
+                                        kryteriów Centralnej Komisji Egzaminacyjnej, ze szczegółowym wyjaśnieniem
+                                        błędów.</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <p class="text-gray-600">The business English course helped me communicate more effectively with
-                        international clients. Highly recommended!</p>
-                </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
-                            A
-                        </div>
-                        <div class="ml-4">
-                            <div class="font-semibold">Ana Silva</div>
-                            <div class="text-gray-500">Conversation Practice</div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1122&q=80"
+                            alt="English learning materials" class="rounded-lg shadow-lg">
+                        <div class="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
+                            <span class="flex items-center text-indigo-700 font-bold">
+                                <i class="fas fa-check-circle mr-2 text-green-500"></i> Zgodne z CKE
+                            </span>
                         </div>
                     </div>
-                    <p class="text-gray-600">Regular conversation practice has boosted my confidence in speaking
-                        English. The lessons are always engaging and fun.</p>
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="contact" class="py-20 bg-blue-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
-            <div class="max-w-3xl mx-auto">
-                <form id="contactForm" class="space-y-6">
-                    <div>
-                        <input type="text" id="name" name="name" placeholder="Your Name"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+        </section>
+
+        <section id="for-who" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Dla kogo?</h2>
+                    <p class="text-xl text-gray-600">
+                        Nasz kurs jest idealnym rozwiązaniem dla uczniów pragnących dobrze przygotować się do egzaminu
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-xl shadow-sm">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="h-12 w-12 flex items-center justify-center rounded-full bg-indigo-600 text-white text-2xl">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h3 class="ml-4 text-2xl font-semibold">Uczniowie 8 klasy</h3>
+                        </div>
+
+                        <p class="text-gray-700 mb-6">
+                            Kurs jest przeznaczony dla uczniów ósmej klasy szkoły podstawowej, pragnących:
+                        </p>
+
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Uporządkować posiadaną wiedzę przed egzaminem</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Mieć pewność, że żadne zagadnienie na egzaminie nie zaskoczy</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Uzyskać zadowalający wynik, który pozwoli na wybór wymarzonego liceum</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div>
-                        <input type="email" id="email" name="email" placeholder="Your Email"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+
+                    <div class="bg-gradient-to-br from-cyan-50 to-indigo-50 p-8 rounded-xl shadow-sm">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="h-12 w-12 flex items-center justify-center rounded-full bg-cyan-600 text-white text-2xl">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 class="ml-4 text-2xl font-semibold">Uczniowie 7 klasy</h3>
+                        </div>
+
+                        <p class="text-gray-700 mb-6">
+                            Kurs jest przeznaczony dla uczniów siódmej klasy szkoły podstawowej, którzy:
+                        </p>
+
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Już teraz dobrze radzą sobie z językiem angielskim</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>Chcieliby rozpocząć ósmą klasę z już gruntownie uporządkowaną wiedzą</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>W ósmej klasie chcą skupić się na przygotowaniu do egzaminu z innych
+                                    przedmiotów</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div>
-                        <textarea id="message" name="message" rows="4" placeholder="Your Message"
-                                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"></textarea>
-                    </div>
-                    <div>
-                        <button type="submit"
-                                class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                            Send Message
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-20 bg-white" x-data="{ selected: null }">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Najczęściej zadawane pytania</h2>
+                    <p class="text-xl text-gray-600">
+                        Odpowiedzi na najczęstsze pytania o nasz kurs
+                    </p>
+                </div>
+
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                        <button @click="selected !== 1 ? selected = 1 : selected = null"
+                            class="flex justify-between items-center w-full p-6 text-left">
+                            <span class="font-medium text-lg">Jak wyglądają zajęcia online?</span>
+                            <svg class="w-5 h-5 transform transition-transform"
+                                :class="selected === 1 ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
                         </button>
+                        <div x-show="selected === 1" x-transition:enter="transition-all ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-3"
+                            x-transition:enter-end="opacity-100 transform translate-y-0" class="p-6 pt-0 text-gray-600">
+                            Zajęcia prowadzone są na platformie ZOOM w małych grupach. Każde spotkanie trwa 60 minut i
+                            obejmuje różne aspekty języka angielskiego.
+                            Kursanci mają dostęp do interaktywnych materiałów i otrzymują regularne zadania domowe,
+                            które pomagają utrwalić wiedzę.
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </section>
 
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">EnglishPro</h3>
-                    <p class="text-gray-400">Your path to English fluency</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Contact</h3>
-                    <p class="text-gray-400">contact@englishpro.com</p>
-                    <p class="text-gray-400">+1 234 567 890</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Follow Us</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                        <button @click="selected !== 2 ? selected = 2 : selected = null"
+                            class="flex justify-between items-center w-full p-6 text-left">
+                            <span class="font-medium text-lg">Co się stanie, jeśli nie mogę uczestniczyć w
+                                zajęciach?</span>
+                            <svg class="w-5 h-5 transform transition-transform"
+                                :class="selected === 2 ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
                             </svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </button>
+                        <div x-show="selected === 2" x-transition:enter="transition-all ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-3"
+                            x-transition:enter-end="opacity-100 transform translate-y-0" class="p-6 pt-0 text-gray-600">
+                            W przypadku nieobecności na zajęciach, przekazujemy materiały z lekcji drogą mailową.
+                            Przy wcześniejszym powiadomieniu, możemy również nagrać sesję, aby uczeń mógł nadrobić
+                            materiał.
+                            Zachęcamy do regularnego uczestnictwa, ponieważ interakcja podczas zajęć jest kluczowa dla
+                            efektywnej nauki.
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                        <button @click="selected !== 3 ? selected = 3 : selected = null"
+                            class="flex justify-between items-center w-full p-6 text-left">
+                            <span class="font-medium text-lg">Jak duże są grupy uczniów?</span>
+                            <svg class="w-5 h-5 transform transition-transform"
+                                :class="selected === 3 ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
                             </svg>
-                        </a>
+                        </button>
+                        <div x-show="selected === 3" x-transition:enter="transition-all ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-3"
+                            x-transition:enter-end="opacity-100 transform translate-y-0" class="p-6 pt-0 text-gray-600">
+                            Nasze grupy są małe, liczą maksymalnie 8 uczniów. Takie rozwiązanie zapewnia każdemu
+                            uczniowi
+                            wystarczającą ilość czasu na aktywne uczestnictwo w zajęciach oraz indywidualne podejście
+                            nauczyciela.
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                        <button @click="selected !== 4 ? selected = 4 : selected = null"
+                            class="flex justify-between items-center w-full p-6 text-left">
+                            <span class="font-medium text-lg">Czy mogę dołączyć do kursu w trakcie jego trwania?</span>
+                            <svg class="w-5 h-5 transform transition-transform"
+                                :class="selected === 4 ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="selected === 4" x-transition:enter="transition-all ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-3"
+                            x-transition:enter-end="opacity-100 transform translate-y-0" class="p-6 pt-0 text-gray-600">
+                            Dołączenie do kursu w trakcie jego trwania jest możliwe, jeśli są dostępne miejsca w
+                            grupach.
+                            W takim przypadku, oferujemy materiały z poprzednich zajęć oraz dodatkowe konsultacje, aby
+                            pomóc
+                            w nadrobieniu zaległości. Prosimy o kontakt telefoniczny lub mailowy, aby omówić
+                            indywidualną sytuację.
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
+                        <button @click="selected !== 5 ? selected = 5 : selected = null"
+                            class="flex justify-between items-center w-full p-6 text-left">
+                            <span class="font-medium text-lg">Jakie są warunki płatności?</span>
+                            <svg class="w-5 h-5 transform transition-transform"
+                                :class="selected === 5 ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="selected === 5" x-transition:enter="transition-all ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-3"
+                            x-transition:enter-end="opacity-100 transform translate-y-0" class="p-6 pt-0 text-gray-600">
+                            Oferujemy elastyczne warunki płatności. Możesz zapłacić całą kwotę 1399 zł z góry lub
+                            skorzystać z opcji płatności ratalnej.
+                            Szczegółowe informacje o harmonogramie rat i metodach płatności są przekazywane podczas
+                            zapisu na kurs.
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
-</main>
+        </section>
+
+
+        <section id="when-where" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="h-12 w-12 flex items-center justify-center rounded-full bg-indigo-600 text-white text-2xl">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <h3 class="ml-4 text-2xl font-semibold">Kiedy?</h3>
+                        </div>
+
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-indigo-600 mt-1 mr-3 bg-indigo-100 p-1 rounded-full"></i>
+                                <span>Zajęcia odbywają się w <strong>każdą sobotę</strong> (z wyjątkiem przerw
+                                    świątecznych i ferii według harmonogramu dla województwa mazowieckiego)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-indigo-600 mt-1 mr-3 bg-indigo-100 p-1 rounded-full"></i>
+                                <span>W wybranych przez Kursanta godzinach: <strong>10:00-11:00</strong> lub
+                                    <strong>11:15-12:15</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-indigo-600 mt-1 mr-3 bg-indigo-100 p-1 rounded-full"></i>
+                                <span>Start najbliższego kursu: <strong>20. września 2025</strong></span>
+                            </li>
+                        </ul>
+
+                        <div class="mt-8 flex justify-center">
+                            <a href="#contact"
+                                class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium">
+                                <span>Zapisz się już dziś</span>
+                                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="h-12 w-12 flex items-center justify-center rounded-full bg-indigo-600 text-white text-2xl">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="ml-4 text-2xl font-semibold">Gdzie?</h3>
+                        </div>
+
+                        <div class="mb-6">
+                            <img src="assets/images/zoom.png" alt="Online education"
+                                class="w-full h-48 object-cover rounded-lg mb-4">
+
+                            <p class="text-center text-lg font-medium">
+                                Spotkania online na platformie ZOOM
+                            </p>
+                            <p class="text-center text-gray-600 mt-2">
+                                Uczestnictwo wymaga tylko komputera lub tabletu z dostępem do internetu
+                            </p>
+                        </div>
+
+                        <div class="flex justify-center gap-6">
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="rounded-full bg-indigo-100 w-14 h-14 flex items-center justify-center text-indigo-600 mb-2">
+                                    <i class="fas fa-home text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">Wygodnie z domu</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="rounded-full bg-indigo-100 w-14 h-14 flex items-center justify-center text-indigo-600 mb-2">
+                                    <i class="fas fa-video text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">Interaktywne zajęcia</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="rounded-full bg-indigo-100 w-14 h-14 flex items-center justify-center text-indigo-600 mb-2">
+                                    <i class="fas fa-clock text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">Oszczędność czasu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Cena</h2>
+                    <p class="text-xl text-gray-600">
+                        Inwestycja w Twoją przyszłość edukacyjną
+                    </p>
+                </div>
+
+                <div
+                    class="max-w-lg mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
+                    <div class="p-8 text-center text-white">
+                        <h3 class="text-2xl font-bold mb-2">Kurs "Solidny od podszewki"</h3>
+                        <div class="text-5xl font-bold my-6">1399 zł</div>
+                        <p class="mb-6 opacity-90">Kompleksowe przygotowanie do egzaminu ósmoklasisty</p>
+                    </div>
+
+                    <div class="bg-white p-8">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <span>25 spotkań online (60 min każde)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <span>Sprawdzenie i ocena minimum 4 prac pisemnych</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <span>Szczegółowe wyjaśnienie błędów</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <span>Materiały dydaktyczne</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <span><strong>Możliwość płatności ratalnej</strong></span>
+                            </li>
+                        </ul>
+
+                        <div class="flex flex-col space-y-4">
+                            <a href="#contact" class="btn-primary text-center">
+                                Zapisz się teraz
+                            </a>
+                            <span class="text-center text-gray-500 text-sm">
+                                Liczba miejsc ograniczona
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-indigo-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Zapisy</h2>
+                    <p class="text-xl text-gray-600">
+                        Skontaktuj się z nami, aby zapisać się na kurs
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <form id="contactForm" class="space-y-6 bg-white p-8 rounded-xl shadow-md">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Imię i
+                                    nazwisko</label>
+                                <input type="text" id="name" name="name" placeholder="Wpisz swoje imię i nazwisko"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Twój adres email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Numer telefonu"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="message"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Wiadomość</label>
+                                <textarea id="message" name="message" rows="4" placeholder="Twoja wiadomość lub pytania"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit"
+                                    class="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                                    Wyślij wiadomość
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-semibold mb-6">Kontakt bezpośredni</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Telefon</h4>
+                                    <a href="tel:503125793"
+                                        class="text-indigo-600 font-medium hover:text-indigo-800 transition duration-300">
+                                        503 125 793
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Email</h4>
+                                    <a href="mailto:kurs8klasisty@gmail.com"
+                                        class="text-indigo-600 font-medium hover:text-indigo-800 transition duration-300">
+                                        kurs8klasisty@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100 text-indigo-600">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Godziny kontaktu</h4>
+                                    <p class="text-gray-600">
+                                        Poniedziałek - Piątek: 9:00 - 17:00
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-indigo-50 p-4 rounded-lg">
+                            <p class="text-center text-gray-700">
+                                Zapisz się teraz, aby zagwarantować sobie miejsce w grupie!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div>
+                        <div
+                            class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 mb-4">
+                            KursAngielski</div>
+                        <p class="text-gray-400 mb-4">Profesjonalne przygotowanie do egzaminu ósmoklasisty z języka
+                            angielskiego.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Kontakt</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-phone text-indigo-400 mt-1 mr-3"></i>
+                                <span>503 125 793</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-envelope text-indigo-400 mt-1 mr-3"></i>
+                                <span>kurs8klasisty@gmail.com</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-indigo-400 mt-1 mr-3"></i>
+                                <span>Zajęcia online na platformie ZOOM</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Szybkie linki</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#home" class="text-gray-400 hover:text-white transition duration-300">Strona
+                                    główna</a>
+                            </li>
+                            <li>
+                                <a href="#about" class="text-gray-400 hover:text-white transition duration-300">O
+                                    kursie</a>
+                            </li>
+                            <li>
+                                <a href="#features" class="text-gray-400 hover:text-white transition duration-300">Co
+                                    zawiera</a>
+                            </li>
+                            <li>
+                                <a href="#for-who" class="text-gray-400 hover:text-white transition duration-300">Dla
+                                    kogo</a>
+                            </li>
+                            <li>
+                                <a href="#pricing"
+                                    class="text-gray-400 hover:text-white transition duration-300">Cena</a>
+                            </li>
+                            <li>
+                                <a href="#contact"
+                                    class="text-gray-400 hover:text-white transition duration-300">Kontakt</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 mt-10 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 KursAngielski. Wszelkie prawa zastrzeżone.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
 </body>
+
 </html>
