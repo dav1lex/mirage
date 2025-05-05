@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin Dashboard | EnglishPro</title>
+    <title>Panel Administratora | Kurs8Klasisty</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Admin dashboard for managing blog content">
-    <meta name="author" content="EnglishPro">
+    <meta name="description" content="Panel administratora do zarządzania treściami bloga">
+    <meta name="author" content="Kurs8Klasisty">
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.firebase.com; script-src 'self' https://cdn.jsdelivr.net https://www.gstatic.com https://cdn.quilljs.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdn.quilljs.com https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self' https://*.firebaseio.com https://firestore.googleapis.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.googleapis.com https://*.firebaseapp.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="js/styles-fix.css">
 
-    <!-- Quill Editor (Free alternative) -->
+    <!-- Quill Editor -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
@@ -29,9 +37,18 @@
 <div id="loginSection" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-50 to-blue-50">
     <div class="bg-white p-8 rounded-lg shadow-xl w-96">
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-green-600">Admin Login</h1>
-            <p class="text-gray-500 mt-2">Sign in to manage your blog content</p>
+            <h1 class="text-3xl font-bold text-green-600">Panel Administratora</h1>
+            <p class="text-gray-500 mt-2">Zaloguj się, aby zarządzać treściami bloga</p>
         </div>
+        
+        <!-- Status message -->
+        <div id="loginStatus" class="mb-4 p-3 bg-blue-50 text-blue-600 rounded hidden">
+            <p class="flex items-center">
+                <i class="fas fa-info-circle mr-2"></i>
+                <span id="loginStatusText">Trwa logowanie...</span>
+            </p>
+        </div>
+        
         <form id="loginForm" class="space-y-4">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -44,7 +61,7 @@
                 </div>
             </div>
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-700">Hasło</label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-lock text-gray-400"></i>
@@ -55,9 +72,20 @@
             </div>
             <button type="submit"
                     class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors font-medium">
-                Login
+                Zaloguj się
             </button>
         </form>
+        
+        <!-- Troubleshooting tips -->
+        <div class="mt-6 text-sm text-gray-500 border-t pt-4">
+            <p class="mb-2 font-medium">Masz problemy z logowaniem?</p>
+            <ul class="list-disc pl-5 space-y-1">
+                <li>Upewnij się, że podajesz poprawny email i hasło</li>
+                <li>Sprawdź czy masz uprawnienia administratora</li>
+                <li>Kliknij przycisk "Setup Admin User" po zalogowaniu</li>
+                <li>Wyczyść dane przeglądarki i spróbuj ponownie</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -68,12 +96,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
-                    <h1 class="text-xl font-bold text-green-600">Blog Admin</h1>
+                    <h1 class="text-xl font-bold text-green-600">Panel Bloga</h1>
                     <a href="/" class="text-gray-600 hover:text-green-600 flex items-center gap-2">
-                        <i class="fas fa-home"></i> Home
+                        <i class="fas fa-home"></i> Strona główna
                     </a>
                     <a href="/blog" class="text-gray-600 hover:text-green-600 flex items-center gap-2">
-                        <i class="fas fa-book"></i> View Blog
+                        <i class="fas fa-book"></i> Zobacz Blog
                     </a>
                 </div>
                 <div class="flex items-center">
@@ -81,7 +109,7 @@
                         <i class="fas fa-user mr-2"></i> <span id="userEmailText"></span>
                     </span>
                     <button id="logoutBtn" class="text-gray-600 hover:text-gray-900 flex items-center gap-2">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i> Wyloguj
                     </button>
                 </div>
             </div>
@@ -91,10 +119,10 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold">Blog Posts</h2>
+            <h2 class="text-2xl font-bold">Artykuły</h2>
             <button id="newPostBtn"
                     class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors flex items-center gap-2">
-                <i class="fas fa-plus"></i> New Post
+                <i class="fas fa-plus"></i> Nowy artykuł
             </button>
         </div>
 
@@ -106,7 +134,7 @@
 <div id="postModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 overflow-y-auto h-full w-full z-50">
     <div class="relative top-10 mx-auto p-6 border w-full max-w-4xl shadow-2xl rounded-md bg-white mb-10">
         <div class="flex justify-between items-center mb-6 border-b pb-4">
-            <h3 class="text-2xl font-bold text-gray-800" id="modalTitle">New Post</h3>
+            <h3 class="text-2xl font-bold text-gray-800" id="modalTitle">Nowy artykuł</h3>
             <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
                 <i class="fas fa-times"></i>
             </button>
@@ -118,15 +146,15 @@
                 <div class="md:col-span-2 space-y-6">
                     <!-- Title -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Title</label>
+                        <label class="block text-sm font-medium text-gray-700">Tytuł</label>
                         <input type="text" id="postTitle" required
                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500">
-                        <p class="mt-1 text-sm text-gray-500">Character count: <span id="titleCount">0</span>/60 (Optimal: 50-60)</p>
+                        <p class="mt-1 text-sm text-gray-500">Ilość znaków: <span id="titleCount">0</span>/60 (Optymalne: 50-60)</p>
                     </div>
 
                     <!-- Rich Text Editor -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Content</label>
+                        <label class="block text-sm font-medium text-gray-700">Treść</label>
                         <div class="editor-container border border-gray-300 rounded-md overflow-hidden">
                             <div id="editor" class="prose max-w-full min-h-[350px]"></div>
                         </div>
@@ -139,7 +167,7 @@
                     <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                         <div class="flex items-center justify-between mb-3">
                             <h4 class="font-medium flex items-center">
-                                <i class="fas fa-chart-line mr-2 text-green-600"></i> SEO Score
+                                <i class="fas fa-chart-line mr-2 text-green-600"></i> Wynik SEO
                             </h4>
                             <div id="seo-score-badge" class="px-2 py-1 bg-gray-200 text-gray-800 text-xs rounded-full font-medium">
                                 <span id="seo-score-value">0%</span>
@@ -148,64 +176,82 @@
                         
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs text-gray-500">
-                                <span>Title</span>
-                                <span id="seo-title-status">⚪ Not checked</span>
+                                <span>Tytuł</span>
+                                <span id="seo-title-status">⚪ Niesprawdzony</span>
                             </div>
                             <div class="flex justify-between text-xs text-gray-500">
-                                <span>Description</span>
-                                <span id="seo-desc-status">⚪ Not checked</span>
+                                <span>Opis</span>
+                                <span id="seo-desc-status">⚪ Niesprawdzony</span>
                             </div>
                             <div class="flex justify-between text-xs text-gray-500">
-                                <span>Content Length</span>
-                                <span id="seo-content-status">⚪ Not checked</span>
+                                <span>Długość treści</span>
+                                <span id="seo-content-status">⚪ Niesprawdzony</span>
                             </div>
                             <div class="flex justify-between text-xs text-gray-500">
-                                <span>Keywords</span>
-                                <span id="seo-keyword-status">⚪ Not checked</span>
+                                <span>Słowa kluczowe</span>
+                                <span id="seo-keyword-status">⚪ Niesprawdzone</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 flex items-center">
+                            <i class="fas fa-folder mr-2 text-gray-600"></i> Kategoria
+                        </label>
+                        <select id="postCategory" 
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm">
+                            <option value="">Bez kategorii</option>
+                            <option value="Egzamin Ósmoklasisty">Egzamin Ósmoklasisty</option>
+                            <option value="Gramatyka">Gramatyka</option>
+                            <option value="Słownictwo">Słownictwo</option>
+                            <option value="Porady">Porady</option>
+                            <option value="Ćwiczenia">Ćwiczenia</option>
+                            <option value="Dla rodziców">Dla rodziców</option>
+                            <option value="Dla nauczycieli">Dla nauczycieli</option>
+                        </select>
                     </div>
 
                     <!-- SEO Settings -->
                     <div class="space-y-4">
                         <h4 class="font-medium flex items-center">
-                            <i class="fas fa-cog mr-2 text-gray-600"></i> SEO Settings
+                            <i class="fas fa-cog mr-2 text-gray-600"></i> Ustawienia SEO
                         </h4>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Meta Description</label>
+                            <label class="block text-sm font-medium text-gray-700">Opis Meta</label>
                             <textarea id="metaDescription" maxlength="160"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
-                                    placeholder="Enter a compelling description (max 160 characters)" rows="3"></textarea>
-                            <p class="mt-1 text-xs text-gray-500">Characters: <span id="metaCount">0</span>/160 (Optimal: 150-160)</p>
+                                    placeholder="Wprowadź krótki opis artykułu (maks. 160 znaków)" rows="3"></textarea>
+                            <p class="mt-1 text-xs text-gray-500">Ilość znaków: <span id="metaCount">0</span>/160 (Optymalne: 150-160)</p>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Keywords</label>
+                            <label class="block text-sm font-medium text-gray-700">Słowa kluczowe</label>
                             <input type="text" id="keywords"
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
-                                  placeholder="english learning, ielts tips, etc (comma separated)">
+                                  placeholder="angielski, egzamin, gramatyka (oddzielone przecinkami)">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">URL Slug</label>
+                            <label class="block text-sm font-medium text-gray-700">Slug URL</label>
                             <input type="text" id="urlSlug"
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
-                                  placeholder="your-post-url">
+                                  placeholder="twoj-artykul-url">
                         </div>
                     </div>
 
                     <!-- Featured Image -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 flex items-center">
-                            <i class="fas fa-image mr-2 text-gray-600"></i> Featured Image
+                            <i class="fas fa-image mr-2 text-gray-600"></i> Zdjęcie główne
                         </label>
                         <div class="mt-1">
                             <input type="url" id="imageUrl"
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm"
-                                  placeholder="https://example.com/image.jpg">
+                                  placeholder="https://przyklad.pl/obraz.jpg">
                             <p class="mt-2 text-xs text-gray-500">
-                                Recommended size: 1200x630px for optimal social sharing
+                                Zalecany rozmiar: 1200x630px dla optymalnego wyświetlania w mediach społecznościowych
                             </p>
                         </div>
                     </div>
@@ -216,17 +262,18 @@
             <div class="flex justify-end space-x-4 pt-4 border-t">
                 <button type="button" id="cancelPost"
                         class="px-4 py-2 border rounded-md hover:bg-gray-100 flex items-center gap-2">
-                    <i class="fas fa-times"></i> Cancel
+                    <i class="fas fa-times"></i> Anuluj
                 </button>
                 <button type="submit"
                         class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
-                    <i class="fas fa-save"></i> Save Post
+                    <i class="fas fa-save"></i> Zapisz artykuł
                 </button>
             </div>
         </form>
     </div>
 </div>
 
+<!-- Load Firebase Config -->
 <script>
     // Firebase Configuration
     const firebaseConfig = {
@@ -243,519 +290,65 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-
-    // Initialize Editor
-    let quill;
-
-    function initEditor() {
-        // Initialize Quill editor
-        if (quill) {
-            quill.deleteText(0, quill.getLength());
-        } else {
-            const toolbarOptions = [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
-                ['link', 'image'],
-
-                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-                [{ 'direction': 'rtl' }],                         // text direction
-
-                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults
-                [{ 'font': [] }],
-                [{ 'align': [] }],
-
-                ['clean']                                         // remove formatting button
-            ];
-
-            quill = new Quill('#editor', {
-                modules: {
-                    toolbar: toolbarOptions
-                },
-                theme: 'snow'
-            });
-            
-            quill.on('text-change', function() {
-                updateSEOScore();
-            });
-        }
-
-        function updateSEOScore() {
-            const title = document.getElementById('postTitle').value;
-            const content = quill.root.innerHTML;
-            const metaDescription = document.getElementById('metaDescription').value;
-            const keywords = document.getElementById('keywords').value;
-
-            let score = 0;
-            const issues = [];
-            
-            // Title status
-            const titleElement = document.getElementById('seo-title-status');
-            if (title.length >= 50 && title.length <= 60) {
-                score += 20;
-                titleElement.innerHTML = '🟢 Excellent';
-                titleElement.className = 'text-green-600 text-xs';
-            } else if (title.length >= 40 && title.length < 50) {
-                score += 15;
-                titleElement.innerHTML = '🟡 Good';
-                titleElement.className = 'text-yellow-600 text-xs';
-            } else {
-                titleElement.innerHTML = '🔴 Needs work';
-                titleElement.className = 'text-red-600 text-xs';
-                issues.push(`Title length should be 40-60 characters (current: ${title.length})`);
-            }
-
-            // Meta description status
-            const descElement = document.getElementById('seo-desc-status');
-            if (metaDescription.length >= 150 && metaDescription.length <= 160) {
-                score += 20;
-                descElement.innerHTML = '🟢 Excellent';
-                descElement.className = 'text-green-600 text-xs';
-            } else if (metaDescription.length >= 120 && metaDescription.length < 150) {
-                score += 15;
-                descElement.innerHTML = '🟡 Good';
-                descElement.className = 'text-yellow-600 text-xs';
-            } else {
-                descElement.innerHTML = '🔴 Needs work';
-                descElement.className = 'text-red-600 text-xs';
-                issues.push(`Meta description should be 150-160 characters (current: ${metaDescription.length})`);
-            }
-
-            // Content length status
-            const contentElement = document.getElementById('seo-content-status');
-            const plainText = quill.getText();
-            const wordCount = plainText.split(/\s+/).filter(word => word.length > 0).length;
-            if (wordCount >= 300) {
-                score += 20;
-                contentElement.innerHTML = '🟢 Excellent';
-                contentElement.className = 'text-green-600 text-xs';
-            } else if (wordCount >= 200 && wordCount < 300) {
-                score += 10;
-                contentElement.innerHTML = '🟡 Good';
-                contentElement.className = 'text-yellow-600 text-xs';
-            } else {
-                contentElement.innerHTML = '🔴 Needs work';
-                contentElement.className = 'text-red-600 text-xs';
-                issues.push(`Content should be at least 300 words (current: ${wordCount})`);
-            }
-
-            // Keyword status
-            const keywordElement = document.getElementById('seo-keyword-status');
-            if (keywords) {
-                const keywordList = keywords.split(',').map(k => k.trim().toLowerCase());
-                const contentLower = plainText.toLowerCase();
-
-                let keywordFound = 0;
-                keywordList.forEach(keyword => {
-                    if (contentLower.includes(keyword)) {
-                        keywordFound++;
-                    }
-                });
-
-                const keywordScore = Math.min((keywordFound / keywordList.length) * 20, 20);
-                score += keywordScore;
-                
-                if (keywordScore >= 15) {
-                    keywordElement.innerHTML = '🟢 Excellent';
-                    keywordElement.className = 'text-green-600 text-xs';
-                } else if (keywordScore >= 10) {
-                    keywordElement.innerHTML = '🟡 Good';
-                    keywordElement.className = 'text-yellow-600 text-xs';
-                } else {
-                    keywordElement.innerHTML = '🔴 Needs work';
-                    keywordElement.className = 'text-red-600 text-xs';
-                    issues.push('Use more keywords in your content');
-                }
-            } else {
-                keywordElement.innerHTML = '🔴 Missing';
-                keywordElement.className = 'text-red-600 text-xs';
-                issues.push('No keywords specified');
-            }
-
-            // Structure analysis (20 points)
-            let structureScore = 0;
-            if (content.includes('<h1')) structureScore += 5;
-            if (content.includes('<h2')) structureScore += 5;
-            if (content.includes('<p>')) structureScore += 5;
-            if (content.includes('<img')) structureScore += 5;
-            score += structureScore;
-
-            // Update UI
-            const scoreElement = document.getElementById('seo-score-value');
-            const scoreBadge = document.getElementById('seo-score-badge');
-            
-            scoreElement.textContent = `${Math.round(score)}%`;
-            
-            if (score >= 80) {
-                scoreBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium';
-            } else if (score >= 60) {
-                scoreBadge.className = 'px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium';
-            } else {
-                scoreBadge.className = 'px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full font-medium';
-            }
-
-            // Return score and issues for potential display
-            return { score, issues };
-        }
-
-        return true;
-    }
-
-    // Auth state observer
-    auth.onAuthStateChanged((user) => {
-        document.getElementById('loginSection').style.display = user ? 'none' : 'flex';
-        document.getElementById('adminPanel').style.display = user ? 'block' : 'none';
-        if (user) {
-            document.getElementById('userEmailText').textContent = user.email;
-            loadPosts();
-        }
-    });
-
-    // Login form handler
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-        } catch (error) {
-            alert('Login failed: ' + error.message);
-        }
-    });
-
-    // Logout handler
-    document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
-
-    // Character counters
-    document.getElementById('postTitle').addEventListener('input', function(e) {
-        document.getElementById('titleCount').textContent = e.target.value.length;
-    });
-
-    document.getElementById('metaDescription').addEventListener('input', function(e) {
-        document.getElementById('metaCount').textContent = e.target.value.length;
-    });
-
-    // Auto-generate slug from title
-    document.getElementById('postTitle').addEventListener('input', function(e) {
-        const slug = e.target.value
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-        document.getElementById('urlSlug').value = slug;
-    });
-
-    // SEO Score calculation
-    function calculateSEOScore(postData) {
-        let score = 0;
-        const maxScore = 100;
-
-        // Title length (optimal: 50-60 characters)
-        const titleLength = postData.title.length;
-        if (titleLength >= 50 && titleLength <= 60) score += 20;
-        else if (titleLength >= 40 && titleLength <= 70) score += 15;
-
-        // Meta description length (optimal: 150-160 characters)
-        const metaDescLength = postData.metaDescription.length;
-        if (metaDescLength >= 150 && metaDescLength <= 160) score += 20;
-        else if (metaDescLength >= 120 && metaDescLength <= 170) score += 15;
-
-        // Keywords present
-        if (postData.keywords && postData.keywords.length > 0) score += 15;
-
-        // Content length (at least 300 words)
-        const wordCount = postData.content.replace(/<[^>]*>/g, '').split(/\s+/).length;
-        if (wordCount >= 300) score += 15;
-
-        // Image URL present
-        if (postData.imageUrl) score += 15;
-
-        // Slug optimization
-        if (postData.slug && postData.slug.length > 0) score += 15;
-
-        return Math.min(score, maxScore);
-    }
-
-    // Load posts
-    async function loadPosts() {
-        const postsDiv = document.getElementById('postsList');
-        postsDiv.innerHTML = '';
-
-        try {
-            const querySnapshot = await db.collection('posts')
-                .orderBy('createdAt', 'desc')
-                .get();
-
-            if (querySnapshot.empty) {
-                postsDiv.innerHTML = `
-                        <div class="text-center py-12 bg-white rounded-lg shadow">
-                            <i class="fas fa-pen-nib text-gray-300 text-5xl mb-4"></i>
-                            <p class="text-xl text-gray-600">No posts yet</p>
-                            <p class="mt-2 text-gray-500">Create your first post to get started!</p>
-                            <button id="emptyStateNewPost" class="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 inline-flex items-center gap-2">
-                                <i class="fas fa-plus"></i> Create New Post
-                            </button>
-                        </div>
-                    `;
-                
-                document.getElementById('emptyStateNewPost').addEventListener('click', () => {
-                    document.getElementById('newPostBtn').click();
-                });
-                
-                return;
-            }
-
-            querySnapshot.forEach((doc) => {
-                const post = doc.data();
-                const postEl = document.createElement('div');
-                postEl.className = 'bg-white p-6 rounded-lg shadow flex justify-between items-center mb-4 hover:shadow-md transition-shadow';
-
-                const seoScore = calculateSEOScore(post);
-                const seoScoreClass = seoScore >= 80 ? 'bg-green-100 text-green-800' :
-                    seoScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800';
-
-                postEl.innerHTML = `
-                        <div class="flex-grow">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="font-bold text-xl">${post.title}</h3>
-                                <span class="px-2 py-1 ${seoScoreClass} text-xs rounded-full flex items-center gap-1">
-                                    <i class="fas fa-chart-line"></i> SEO: ${seoScore}%
-                                </span>
-                            </div>
-                            <div class="text-sm text-gray-600">
-                                <p class="flex items-center gap-1"><i class="far fa-calendar-alt text-gray-400"></i> Published: ${post.createdAt?.toDate().toLocaleDateString()}</p>
-                                <p class="text-sm text-gray-500 mt-1 line-clamp-1">${post.metaDescription || ''}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <a href="/mirage/blog/post.html?slug=${post.slug}"
-                               target="_blank"
-                               class="text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                                <i class="fas fa-external-link-alt"></i> View
-                            </a>
-                            <button onclick="editPost('${doc.id}')"
-                                    class="text-green-600 hover:text-green-800 flex items-center gap-1">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button onclick="deletePost('${doc.id}')"
-                                    class="text-red-600 hover:text-red-800 flex items-center gap-1">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </button>
-                        </div>
-                    `;
-
-                postsDiv.appendChild(postEl);
-            });
-        } catch (error) {
-            console.error('Error loading posts:', error);
-            postsDiv.innerHTML = `
-                    <div class="text-center py-8 bg-red-50 rounded-lg border border-red-200">
-                        <i class="fas fa-exclamation-circle text-red-500 text-3xl mb-2"></i>
-                        <p class="text-red-600">Error loading posts: ${error.message}</p>
-                        <button id="retryLoad" class="mt-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-                            Retry
-                        </button>
-                    </div>
-                `;
-                
-            document.getElementById('retryLoad')?.addEventListener('click', loadPosts);
-        }
-    }
-
-    // Edit post
-    window.editPost = async function(postId) {
-        try {
-            const postDoc = await db.collection('posts').doc(postId).get();
-
-            if (postDoc.exists) {
-                const post = postDoc.data();
-
-                document.getElementById('postTitle').value = post.title || '';
-                document.getElementById('imageUrl').value = post.imageUrl || '';
-                document.getElementById('metaDescription').value = post.metaDescription || '';
-                document.getElementById('keywords').value = post.keywords || '';
-                document.getElementById('urlSlug').value = post.slug || '';
-
-                document.getElementById('modalTitle').textContent = 'Edit Post';
-                document.getElementById('postModal').classList.remove('hidden');
-
-                const form = document.getElementById('postForm');
-                form.dataset.mode = 'edit';
-                form.dataset.postId = postId;
-                
-                // Initialize the editor if not already initialized
-                initEditor();
-                
-                // Set content
-                if (post.content) {
-                    quill.clipboard.dangerouslyPasteHTML(post.content);
-                }
-            }
-        } catch (error) {
-            console.error('Error loading post for edit:', error);
-            alert('Error loading post: ' + error.message);
-        }
-    };
-
-    // Delete post
-    window.deletePost = async function(postId) {
-        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
-            return;
-        }
-
-        try {
-            await db.collection('posts').doc(postId).delete();
-            alert('Post deleted successfully');
-            await loadPosts();
-        } catch (error) {
-            console.error('Error deleting post:', error);
-            alert('Error deleting post: ' + error.message);
-        }
-    };
-
-    // Form submission handler
-    document.getElementById('postForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const form = e.target;
-        const isEditMode = form.dataset.mode === 'edit';
-        const postId = form.dataset.postId;
-
-        // Check if editor is initialized
-        if (!quill) {
-            alert('Editor not initialized. Please try again.');
-            return;
-        }
-
-        // Get content
-        const content = quill.root.innerHTML;
-        const plainText = quill.getText();
-
-        // Calculate SEO score
-        const seoScoreElement = document.getElementById('seo-score-value');
-        const seoScore = parseInt(seoScoreElement.textContent, 10) || 0;
-
-        const postData = {
-            title: document.getElementById('postTitle').value,
-            content: content,
-            imageUrl: document.getElementById('imageUrl').value,
-            metaDescription: document.getElementById('metaDescription').value,
-            keywords: document.getElementById('keywords').value,
-            slug: document.getElementById('urlSlug').value,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            seoScore: seoScore,
-            excerpt: plainText.substring(0, 160) + '...',
-            readingTime: `${Math.ceil(plainText.split(/\s+/).filter(word => word.length > 0).length / 200)} min read`,
-            structuredData: {
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                "headline": document.getElementById('postTitle').value,
-                "description": document.getElementById('metaDescription').value,
-                "image": document.getElementById('imageUrl').value,
-                "dateModified": new Date().toISOString(),
-                "author": {
-                    "@type": "Person",
-                    "name": auth.currentUser.email
-                }
-            }
-        };
-
-        try {
-            if (isEditMode && postId) {
-                await db.collection('posts').doc(postId).update(postData);
-                alert('Post updated successfully!');
-            } else {
-                postData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                await db.collection('posts').add(postData);
-                alert('Post created successfully!');
-            }
-
-            form.reset();
-            form.dataset.mode = '';
-            form.dataset.postId = '';
-            
-            if (quill) {
-                quill.setText('');
-            }
-            
-            document.getElementById('postModal').classList.add('hidden');
-            await loadPosts();
-
-        } catch (error) {
-            console.error('Error saving post:', error);
-            alert('Error saving post: ' + error.message);
-        }
-    });
-
-    // Modal handlers
-    // Initialize editor when the modal opens
-    document.getElementById('newPostBtn').addEventListener('click', () => {
-        const form = document.getElementById('postForm');
-        form.reset();
-        form.dataset.mode = 'create';
-        form.dataset.postId = '';
-        
-        initEditor();
-        
-        document.getElementById('modalTitle').textContent = 'New Post';
-        document.getElementById('postModal').classList.remove('hidden');
-    });
-
-    // Clean up editor when modal closes
-    document.getElementById('closeModal').addEventListener('click', () => {
-        document.getElementById('postModal').classList.add('hidden');
-    });
-    
-    document.getElementById('cancelPost').addEventListener('click', () => {
-        document.getElementById('postModal').classList.add('hidden');
-    });
 </script>
 
-<style>
-.ql-toolbar.ql-snow {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    background-color: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
-}
+<!-- Load utility scripts -->
+<script src="js/editor.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/posts.js"></script>
+<script src="setup.js"></script>
 
-.ql-container.ql-snow {
-    border: none;
-}
+<!-- Setup admin button -->
+<div id="adminSetupPanel" class="hidden fixed bottom-4 right-4">
+    <button id="setupAdminBtn" 
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 shadow-lg flex items-center space-x-2">
+        <i class="fas fa-user-shield"></i>
+        <span>Setup Admin User</span>
+    </button>
+</div>
 
-.editor-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
-}
-
-.line-clamp-1 {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* Additional styles for better UI */
-.ql-editor {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-    .editor-container {
-        min-height: 200px;
-    }
-}
-</style>
+<!-- Main script to initialize everything -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize auth module
+        authUtils.init(auth);
+        
+        // Initialize editor when Quill is available
+        let editor = editorUtils.initEditor();
+        
+        // Initialize posts module
+        postsUtils.init(db, editor);
+        
+        // Setup UI interactions
+        editorUtils.setupSlugGenerator();
+        editorUtils.setupMetaDescriptionCounter();
+        editorUtils.setupKeywordsTracking();
+        
+        // Setup admin button functionality
+        const setupAdminBtn = document.getElementById('setupAdminBtn');
+        const adminSetupPanel = document.getElementById('adminSetupPanel');
+        
+        // Show admin setup button when logged in
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                adminSetupPanel.classList.remove('hidden');
+            } else {
+                adminSetupPanel.classList.add('hidden');
+            }
+        });
+        
+        // Add event listener to setup admin button
+        setupAdminBtn.addEventListener('click', async () => {
+            if (typeof setupAdminUser === 'function') {
+                const result = await setupAdminUser();
+                if (result) {
+                    alert('Admin setup completed successfully! You may need to refresh the page.');
+                }
+            } else {
+                alert('Setup script not loaded properly. Please check console for errors.');
+            }
+        });
+    });
+</script>
 </body>
 </html>

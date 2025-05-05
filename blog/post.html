@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Dynamic Meta Tags -->
-    <title>Blog Post | EnglishPro</title>
+    <title>Artykuł | Kurs8Klasisty</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -26,7 +26,7 @@
     <meta property="article:published_time" content="">
     <meta property="article:modified_time" content="">
     <meta property="article:author" content="">
-    <meta property="article:section" content="English Learning">
+    <meta property="article:section" content="Nauka Angielskiego">
 
     <!-- Structured Data -->
     <script type="application/ld+json"></script>
@@ -37,29 +37,152 @@
 
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #4ade80 0%, #60a5fa 100%);
+        }
+
+        .btn-primary {
+            @apply bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-lg;
+        }
+
+        .nav-logo {
+            background: #4ade80;
+            background: linear-gradient(to right, #4ade80 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .prose {
+            max-width: 65ch;
+            color: #374151;
+        }
+        
+        .prose p {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+        }
+        
+        .prose h2 {
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+        
+        .prose h3 {
+            font-size: 1.25em;
+            margin-top: 1.6em;
+            margin-bottom: 0.6em;
+            font-weight: 600;
+            color: #111827;
+            line-height: 1.3;
+        }
+        
+        .prose ul {
+            margin-top: 1.25em;
+            margin-bottom: 1.25em;
+            padding-left: 1.625em;
+            list-style-type: disc;
+        }
+        
+        .prose li {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .prose blockquote {
+            font-weight: 500;
+            font-style: italic;
+            color: #111827;
+            border-left-width: 0.25rem;
+            border-left-color: #e5e7eb;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="{ mobileMenuOpen: false }">
 <!-- Navigation -->
 <nav class="bg-white shadow-lg fixed w-full z-50">
     <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-20">
             <div class="flex items-center">
-                <a href="/mirage" class="text-2xl font-bold text-green-600">EnglishPro</a>
+                <a href="/" class="flex items-center">
+                    <span class="text-2xl nav-logo">Kurs8Klasisty</span>
+                </a>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="/mirage" class="text-gray-700 hover:text-green-600">Home</a>
-                <a href="/mirage/blog" class="text-gray-700 hover:text-green-600">Blog</a>
+                <a href="/#about" class="text-gray-700 hover:text-green-500 font-medium transition duration-300">O kursie</a>
+                <a href="/#features" class="text-gray-700 hover:text-green-500 font-medium transition duration-300">Co zawiera</a>
+                <a href="/#for-who" class="text-gray-700 hover:text-green-500 font-medium transition duration-300">Dla kogo</a>
+                <a href="/#pricing" class="text-gray-700 hover:text-green-500 font-medium transition duration-300">Cena</a>
+                <a href="/blog" class="text-gray-700 hover:text-green-500 font-medium transition duration-300 border-b-2 border-green-500">Blog</a>
+                <a href="/#contact" class="text-gray-700 hover:text-green-500 font-medium transition duration-300">Kontakt</a>
             </div>
+            <div class="flex items-center">
+                <a href="/#contact"
+                    class="hidden md:block bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg font-medium transition duration-300">
+                    Zapisz się
+                </a>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden ml-4">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile menu -->
+    <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2" @click.away="mobileMenuOpen = false"
+        class="absolute top-20 left-0 right-0 bg-white shadow-lg z-50 border-t md:hidden">
+        <div class="px-4 py-3 space-y-3">
+            <a href="/#about" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">O kursie</a>
+            <a href="/#features" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">Co zawiera</a>
+            <a href="/#for-who" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">Dla kogo</a>
+            <a href="/#pricing" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">Cena</a>
+            <a href="/blog" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">Blog</a>
+            <a href="/#contact" class="block py-2 text-gray-700 hover:text-green-500 font-medium"
+                @click="mobileMenuOpen = false">Kontakt</a>
+            <a href="/#contact"
+                class="block mt-2 bg-green-500 text-white px-3 py-2 rounded-md text-center font-medium"
+                @click="mobileMenuOpen = false">
+                Zapisz się
+            </a>
         </div>
     </div>
 </nav>
 
 <!-- Main Content -->
-<main class="pt-24 pb-12">
+<main class="pt-32 pb-16">
     <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="blogPost" class="animate-pulse">
             <!-- Loading skeleton -->
@@ -72,8 +195,87 @@
                 <div class="h-4 bg-gray-200 rounded w-5/6"></div>
             </div>
         </div>
+
+        <div class="mt-12 border-t border-gray-200 pt-8">
+            <a href="/blog" class="inline-flex items-center text-green-500 hover:text-green-600 font-medium transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Wróć do bloga
+            </a>
+        </div>
     </article>
 </main>
+
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-10">
+            <div>
+                <div class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-400 mb-4">
+                    Kurs8Klasisty</div>
+                <p class="text-gray-400 mb-4">Profesjonalne przygotowanie do egzaminu ósmoklasisty z języka
+                    angielskiego.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Kontakt</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <i class="fas fa-phone text-green-400 mt-1 mr-3"></i>
+                        <span>503 125 793</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-envelope text-green-400 mt-1 mr-3"></i>
+                        <span>kurs8klasisty@gmail.com</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-map-marker-alt text-green-400 mt-1 mr-3"></i>
+                        <span>Zajęcia online na platformie ZOOM</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Szybkie linki</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/" class="text-gray-400 hover:text-white transition duration-300">Strona główna</a>
+                    </li>
+                    <li>
+                        <a href="/#about" class="text-gray-400 hover:text-white transition duration-300">O kursie</a>
+                    </li>
+                    <li>
+                        <a href="/#features" class="text-gray-400 hover:text-white transition duration-300">Co zawiera</a>
+                    </li>
+                    <li>
+                        <a href="/#for-who" class="text-gray-400 hover:text-white transition duration-300">Dla kogo</a>
+                    </li>
+                    <li>
+                        <a href="/#pricing" class="text-gray-400 hover:text-white transition duration-300">Cena</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" class="text-gray-400 hover:text-white transition duration-300">Kontakt</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-10 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 Kurs8klasisty. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </div>
+</footer>
 
 <script>
     // Initialize Firebase
@@ -97,63 +299,182 @@
             const slug = urlParams.get('slug');
 
             if (!slug) {
-                throw new Error('No slug provided');
+                throw new Error('No slug parameter provided');
             }
 
-            const querySnapshot = await db.collection('posts')
-                .where('slug', '==', slug)
-                .get();
+            // Search for post with matching slug
+            const postsRef = db.collection('posts');
+            const snapshot = await postsRef.where('slug', '==', slug).limit(1).get();
 
-            if (querySnapshot.empty) {
-                document.getElementById('blogPost').innerHTML = `
-                        <div class="text-center py-12">
-                            <h1 class="text-2xl font-bold text-gray-900">Post not found</h1>
-                            <a href="/mirage/blog" class="text-green-600 hover:text-green-700">Return to blog</a>
-                        </div>
-                    `;
-                return;
+            if (snapshot.empty) {
+                throw new Error('Post not found');
             }
 
-            const post = querySnapshot.docs[0].data();
-            const postDate = post.createdAt?.toDate() || new Date();
+            // Get post data
+            const postDoc = snapshot.docs[0];
+            const post = postDoc.data();
+            
+            // Update view count
+            await postDoc.ref.update({
+                views: firebase.firestore.FieldValue.increment(1)
+            });
 
-            // Update page title and meta tags
-            document.title = `${post.title} | EnglishPro Blog`;
-
-            // Update content
-            document.getElementById('blogPost').innerHTML = `
-                    <img src="${post.imageUrl || '/mirage/assets/images/default-blog.jpg'}"
-                         alt="${post.title}"
-                         class="w-full h-64 object-cover rounded-lg mb-8">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-4">${post.title}</h1>
-                    <div class="flex items-center text-gray-600 mb-8">
-                        <time datetime="${postDate.toISOString()}">
-                            ${postDate.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            })}
-                        </time>
-                        <span class="mx-2">•</span>
-                        <span>${post.readingTime || '5 min read'}</span>
-                    </div>
-                    <div class="prose prose-green max-w-none">
-                        ${post.content}
-                    </div>
-                `;
+            // Update document title and meta tags
+            document.title = `${post.title} | Kurs8Klasisty`;
+            
+            // Update meta tags
+            updateMetaTags(post);
+            
+            // Fill post content
+            displayPost(post);
+            
+            // Remove loading animation
+            document.getElementById('blogPost').classList.remove('animate-pulse');
+            
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error loading post:', error);
+            
+            // Show error message
             document.getElementById('blogPost').innerHTML = `
-                    <div class="text-center py-12">
-                        <h1 class="text-2xl font-bold text-red-600">Error loading post</h1>
-                        <p class="mt-2 text-gray-600">${error.message}</p>
-                        <a href="/mirage/blog" class="text-green-600 hover:text-green-700">Return to blog</a>
+                <div class="text-center py-12">
+                    <div class="bg-red-50 rounded-lg p-8 max-w-2xl mx-auto">
+                        <h2 class="text-2xl font-semibold text-red-600 mb-4">
+                            <i class="fas fa-exclamation-circle mr-2"></i> 
+                            Nie znaleziono artykułu
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Przepraszamy, nie udało się załadować żądanego artykułu. 
+                            Artykuł mógł zostać usunięty lub link jest nieprawidłowy.
+                        </p>
+                        <a href="/blog" class="bg-green-600 text-white px-6 py-3 rounded-lg inline-block hover:bg-green-700 transition">
+                            <i class="fas fa-arrow-left mr-2"></i> Wróć do bloga
+                        </a>
                     </div>
-                `;
+                </div>
+            `;
+            document.getElementById('blogPost').classList.remove('animate-pulse');
         }
     }
 
-    // Load post when page is ready
+    function updateMetaTags(post) {
+        // Update meta description
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', post.metaDescription || '');
+        
+        // Update meta keywords
+        const metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (metaKeywords) metaKeywords.setAttribute('content', post.keywords || '');
+        
+        // Update Open Graph tags
+        document.querySelector('meta[property="og:title"]').setAttribute('content', post.title);
+        document.querySelector('meta[property="og:description"]').setAttribute('content', post.metaDescription || '');
+        document.querySelector('meta[property="og:image"]').setAttribute('content', post.imageUrl || '');
+        document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+        
+        // Update Twitter Card tags
+        document.querySelector('meta[name="twitter:title"]').setAttribute('content', post.title);
+        document.querySelector('meta[name="twitter:description"]').setAttribute('content', post.metaDescription || '');
+        document.querySelector('meta[name="twitter:image"]').setAttribute('content', post.imageUrl || '');
+    }
+
+    function displayPost(post) {
+        // Format date
+        const date = post.createdAt?.toDate() || new Date();
+        const formattedDate = date.toLocaleDateString('pl-PL', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Category display
+        const categoryHtml = post.category 
+            ? `<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${post.category}</span>`
+            : `<span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Bez kategorii</span>`;
+        
+        // Set image with fallback
+        const imageUrl = post.imageUrl || '/assets/images/default-blog.jpg';
+        
+        // Create HTML
+        document.getElementById('blogPost').innerHTML = `
+            <article class="max-w-4xl mx-auto">
+                <!-- Post Header -->
+                <header class="mb-8">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        ${post.title}
+                    </h1>
+                    
+                    <div class="flex flex-wrap items-center text-gray-600 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span>${formattedDate}</span>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <i class="far fa-clock mr-2"></i>
+                            <span>${post.readingTime || '5 min'}</span>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <i class="far fa-folder mr-2"></i>
+                            ${categoryHtml}
+                        </div>
+                    </div>
+                    
+                    <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden mb-6">
+                        <img src="${imageUrl}" alt="${post.title}" class="w-full h-full object-cover">
+                    </div>
+                </header>
+                
+                <!-- Post Content -->
+                <div class="prose prose-green max-w-none mb-8">
+                    ${post.content}
+                </div>
+                
+                <!-- Post Footer -->
+                <footer class="border-t border-gray-200 pt-6 mt-8">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        ${(post.keywords || '')
+                            .split(',')
+                            .map(keyword => keyword.trim())
+                            .filter(keyword => keyword)
+                            .map(keyword => `
+                                <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                                    #${keyword}
+                                </span>
+                            `)
+                            .join('')
+                        }
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <a href="/blog" class="inline-flex items-center text-green-600 hover:text-green-800">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Powrót do bloga
+                        </a>
+                        
+                        <div class="flex items-center space-x-4">
+                            <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}" 
+                               target="_blank" rel="noopener noreferrer"
+                               class="text-blue-400 hover:text-blue-600">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" 
+                               target="_blank" rel="noopener noreferrer"
+                               class="text-blue-600 hover:text-blue-800">
+                                <i class="fab fa-facebook text-lg"></i>
+                            </a>
+                            <a href="mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent('Sprawdź ten artykuł: ' + window.location.href)}" 
+                               class="text-gray-600 hover:text-gray-800">
+                                <i class="fas fa-envelope text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        `;
+    }
+
+    // Load post on page load
     document.addEventListener('DOMContentLoaded', loadPost);
 </script>
 </body>

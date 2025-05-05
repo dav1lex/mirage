@@ -1,0 +1,79 @@
+/* 
+ * Admin Panel Style Fixes
+ * These styles help fix compatibility issues with Firebase Auth and Quill
+ */
+
+/* Fix for Quill editor */
+.ql-toolbar.ql-snow {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.ql-container.ql-snow {
+    border: none;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Fix for Firebase Auth UI */
+.firebaseui-container {
+    max-width: 100% !important;
+}
+
+/* Editor styles */
+.ql-editor {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .editor-container {
+        min-height: 200px;
+    }
+}
+
+/* Fix z-index for modal on mobile */
+#postModal {
+    z-index: 100;
+}
+
+/* Fix for any CSP-related issues with inline styles */
+[x-cloak] { 
+    display: none !important; 
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+} 
